@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../login/login_widget.dart';
 import '../sign_up/sign_up_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,6 +136,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                         16, 8, 16, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Talleres y Transparencia',
@@ -182,6 +185,8 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                         16, 8, 16, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Registrate Gratis',
@@ -275,7 +280,7 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                         type: PageTransitionType.fade,
                         duration: Duration(milliseconds: 300),
                         reverseDuration: Duration(milliseconds: 300),
-                        child: SignUpWidget(),
+                        child: LoginWidget(),
                       ),
                     );
                   },
