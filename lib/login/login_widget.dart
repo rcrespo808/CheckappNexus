@@ -34,6 +34,17 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        automaticallyImplyLeading: true,
+        title: Text(
+          'Ingreso de Propietarios',
+          style: FlutterFlowTheme.of(context).title2,
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -43,7 +54,9 @@ class _LoginWidgetState extends State<LoginWidget> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 1,
-              decoration: BoxDecoration(),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).primaryBackground,
+              ),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                 child: SingleChildScrollView(
@@ -56,7 +69,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 90),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (!(Theme.of(context).brightness ==
                                     Brightness.dark) ??
@@ -65,11 +78,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 height: 140,
                                 decoration: BoxDecoration(),
-                                child: Image.asset(
-                                  'assets/images/banner2.png',
-                                  width: 242,
-                                  height: 60,
-                                  fit: BoxFit.fitWidth,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: Image.asset(
+                                    'assets/images/banner2.png',
+                                    width: 242,
+                                    height: 60,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                             if (Theme.of(context).brightness ==
@@ -83,7 +100,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   'assets/images/banner1.png',
                                   width: 242,
                                   height: 60,
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
                           ],
@@ -217,7 +234,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
@@ -232,16 +249,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                 );
                               },
-                              text: 'Forgot Password?',
+                              text: 'Perdi la Contraseña',
                               options: FFButtonOptions(
-                                width: 170,
+                                width: 190,
                                 height: 30,
                                 color: Color(0x00FFFFFF),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Poppins',
-                                      color: Colors.white,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
                                 elevation: 0,
                                 borderSide: BorderSide(
@@ -251,49 +269,54 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 borderRadius: 0,
                               ),
                             ),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                final user = await signInWithEmail(
-                                  context,
-                                  emailAddressController.text,
-                                  passwordController.text,
-                                );
-                                if (user == null) {
-                                  return;
-                                }
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  final user = await signInWithEmail(
+                                    context,
+                                    emailAddressController.text,
+                                    passwordController.text,
+                                  );
+                                  if (user == null) {
+                                    return;
+                                  }
 
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 300),
-                                    reverseDuration:
-                                        Duration(milliseconds: 300),
-                                    child: HomePageWidget(),
-                                  ),
-                                  (r) => false,
-                                );
-                              },
-                              text: 'Login',
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle1
-                                    .override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  await Navigator.pushAndRemoveUntil(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 300),
+                                      reverseDuration:
+                                          Duration(milliseconds: 300),
+                                      child: HomePageWidget(),
                                     ),
-                                elevation: 3,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
+                                    (r) => false,
+                                  );
+                                },
+                                text: 'Login',
+                                options: FFButtonOptions(
+                                  width: 130,
+                                  height: 50,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  elevation: 3,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: 8,
                                 ),
-                                borderRadius: 8,
                               ),
                             ),
                           ],
@@ -306,7 +329,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AutoSizeText(
-                              'Use a Social Platform to Login',
+                              'Ingresa con tu cuenta de:',
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
@@ -324,7 +347,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
                               onTap: () async {
@@ -368,45 +391,50 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () async {
-                                final user = await signInWithFacebook(context);
-                                if (user == null) {
-                                  return;
-                                }
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 300),
-                                    reverseDuration:
-                                        Duration(milliseconds: 300),
-                                    child: HomePageWidget(),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  final user =
+                                      await signInWithFacebook(context);
+                                  if (user == null) {
+                                    return;
+                                  }
+                                  await Navigator.pushAndRemoveUntil(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 300),
+                                      reverseDuration:
+                                          Duration(milliseconds: 300),
+                                      child: HomePageWidget(),
+                                    ),
+                                    (r) => false,
+                                  );
+                                },
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 5,
+                                        color: Color(0x3314181B),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    shape: BoxShape.circle,
                                   ),
-                                  (r) => false,
-                                );
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 5,
-                                      color: Color(0x3314181B),
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                  shape: BoxShape.circle,
-                                ),
-                                alignment: AlignmentDirectional(0, 0),
-                                child: FaIcon(
-                                  FontAwesomeIcons.facebookF,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  size: 24,
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: FaIcon(
+                                    FontAwesomeIcons.facebookF,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
                             ),
