@@ -86,15 +86,6 @@ class _LandingPageWidgetState extends State<LandingPageWidget> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 15, 0, 0),
-                                    child: Text(
-                                      'Saber es poder.',
-                                      style:
-                                          FlutterFlowTheme.of(context).title3,
-                                    ),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
