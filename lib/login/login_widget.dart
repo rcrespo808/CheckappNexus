@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forgot_pass/forgot_pass_widget.dart';
 import '../home_page/home_page_widget.dart';
+import '../sign_up/sign_up_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -97,7 +98,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 height: 140,
                                 decoration: BoxDecoration(),
                                 child: Image.asset(
-                                  'assets/images/banner1.png',
+                                  'assets/images/Check-Icon-FeedON-400x400.png',
                                   width: 242,
                                   height: 60,
                                   fit: BoxFit.fitHeight,
@@ -448,7 +449,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Don\'t have an account?',
+                              'No tienes cuenta?',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -459,10 +460,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                             ),
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                await Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 300),
+                                    reverseDuration:
+                                        Duration(milliseconds: 300),
+                                    child: SignUpWidget(),
+                                  ),
+                                );
                               },
-                              text: 'Register',
+                              text: 'Regisrate',
                               options: FFButtonOptions(
                                 width: 90,
                                 height: 30,
