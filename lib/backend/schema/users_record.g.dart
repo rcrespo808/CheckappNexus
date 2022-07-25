@@ -61,12 +61,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+
     value = object.vehicleCount;
     if (value != null) {
       result
         ..add('vehicleCount')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+
     value = object.reference;
     if (value != null) {
       result
@@ -113,10 +115,12 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+
         case 'vehicleCount':
           result.vehicleCount = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+
         case 'Document__Reference__Field':
           result.reference = serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -144,8 +148,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String phoneNumber;
   @override
+
   final int vehicleCount;
   @override
+
   final DocumentReference<Object> reference;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder) updates]) =>
@@ -158,7 +164,9 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
+
       this.vehicleCount,
+
       this.reference})
       : super._();
 
@@ -180,6 +188,7 @@ class _$UsersRecord extends UsersRecord {
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
         vehicleCount == other.vehicleCount &&
+
         reference == other.reference;
   }
 
@@ -244,7 +253,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int _vehicleCount;
   int get vehicleCount => _$this._vehicleCount;
   set vehicleCount(int vehicleCount) => _$this._vehicleCount = vehicleCount;
-
   DocumentReference<Object> _reference;
   DocumentReference<Object> get reference => _$this._reference;
   set reference(DocumentReference<Object> reference) =>
