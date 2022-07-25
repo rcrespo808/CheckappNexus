@@ -1,9 +1,13 @@
 import 'package:built_value/standard_json_plugin.dart';
 
 import 'users_record.dart';
+import 'services_record.dart';
+import 'vehicles_record.dart';
+import 'shops_record.dart';
 
 import 'index.dart';
 
+export '../algolia/algolia_manager.dart';
 export 'index.dart';
 
 part 'serializers.g.dart';
@@ -12,6 +16,9 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
+  ServicesRecord,
+  VehiclesRecord,
+  ShopsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

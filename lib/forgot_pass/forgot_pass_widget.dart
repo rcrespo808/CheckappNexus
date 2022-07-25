@@ -28,9 +28,9 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(60),
         child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
           flexibleSpace: Column(
             mainAxisSize: MainAxisSize.max,
@@ -45,7 +45,8 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                       child: FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
+                        borderColor:
+                            FlutterFlowTheme.of(context).secondaryColor,
                         borderRadius: 30,
                         borderWidth: 1,
                         buttonSize: 50,
@@ -60,26 +61,17 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(100, 0, 0, 0),
                       child: Text(
-                        'Back',
+                        'Atras',
                         style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
+                              fontFamily: 'Exo 2',
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                             ),
                       ),
                     ),
                   ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                child: Text(
-                  'Forgot Password',
-                  style: FlutterFlowTheme.of(context).title1.override(
-                        fontFamily: 'Poppins',
-                        fontSize: 32,
-                      ),
                 ),
               ),
             ],
@@ -93,16 +85,30 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(1, 40, 0, 0),
+            child: Text(
+              'Recupera tu Password',
+              style: FlutterFlowTheme.of(context).title1.override(
+                    fontFamily: 'Exo 2',
+                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    fontSize: 32,
+                  ),
+            ),
+          ),
+          Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20, 4, 20, 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     child: Text(
-                      'We will send you an email with a link to reset your password, please enter the email associated with your account below.',
-                      style: FlutterFlowTheme.of(context).bodyText2,
+                      'ingrese el correo electrónico asociado, para que le  enviemos un enlace para restablecer su contraseña.',
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Exo 2',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
                     ),
                   ),
                 ),
@@ -125,39 +131,46 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                 ],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: TextFormField(
-                controller: emailAddressController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelText: 'Your email address...',
-                  labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                  hintText: 'Enter your email...',
-                  hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Lexend Deca',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(1, 1, 1, 1),
+                child: TextFormField(
+                  controller: emailAddressController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    labelText: 'Tu direccion de correo...',
+                    labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                    hintText: 'Ingresa tu email...',
+                    hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Lexend Deca',
+                          color: Color(0xFF57636C),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        width: 0,
                       ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 0,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 0,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        width: 0,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
+                    filled: true,
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                   ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Exo 2',
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                  keyboardType: TextInputType.emailAddress,
                 ),
-                style: FlutterFlowTheme.of(context).bodyText1,
               ),
             ),
           ),
@@ -180,21 +193,21 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                   context: context,
                 );
               },
-              text: 'Send Link',
+              text: 'Recuperar Password',
               options: FFButtonOptions(
                 width: 270,
                 height: 50,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FlutterFlowTheme.of(context).secondaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      fontFamily: 'Exo 2',
+                      color: FlutterFlowTheme.of(context).primaryText,
                     ),
                 elevation: 3,
                 borderSide: BorderSide(
                   color: Colors.transparent,
                   width: 1,
                 ),
-                borderRadius: 8,
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),
