@@ -15,6 +15,8 @@ void main() async {
   await Firebase.initializeApp();
   await FlutterFlowTheme.initialize();
 
+  FFAppState(); // Initialize FFAppState
+
   runApp(MyApp());
 }
 
@@ -31,8 +33,8 @@ class _MyAppState extends State<MyApp> {
   Locale _locale;
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
-  Stream<CheckappNexusFirebaseUser> userStream;
-  CheckappNexusFirebaseUser initialUser;
+  Stream<CheckappUsersFirebaseUser> userStream;
+  CheckappUsersFirebaseUser initialUser;
   bool displaySplashImage = true;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
@@ -40,7 +42,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    userStream = checkappNexusFirebaseUserStream()
+    userStream = checkappUsersFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
     Future.delayed(
       Duration(seconds: 1),
@@ -64,7 +66,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Checkapp-Nexus',
+      title: 'Checkapp-Users',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -78,17 +80,17 @@ class _MyAppState extends State<MyApp> {
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
           ? Container(
-              color: FlutterFlowTheme.of(context).secondaryColor,
+              color: FlutterFlowTheme.of(context).primaryBackground,
               child: Builder(
                 builder: (context) => Image.asset(
-                  'assets/images/banner2.png',
+                  'assets/images/Checkapp_imagotipo.png',
                   fit: BoxFit.fitWidth,
                 ),
               ),
             )
           : currentUser.loggedIn
               ? HomePageWidget()
-              : LandingPageWidget(),
+              : LoginWidget(),
     );
   }
 }

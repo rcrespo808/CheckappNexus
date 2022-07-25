@@ -1,6 +1,6 @@
 {
-    "name": "Checkapp-Nexus",
-    "short_name": "Checkapp-Nexus",
+    "name": "Checkapp-Users",
+    "short_name": "Checkapp-Users",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
