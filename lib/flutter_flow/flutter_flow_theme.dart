@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const kThemeModeKey = '__theme_mode__';
-SharedPreferences _prefs;
+SharedPreferences? _prefs;
 
 abstract class FlutterFlowTheme {
   static Future initialize() async =>
@@ -29,31 +29,31 @@ abstract class FlutterFlowTheme {
           ? DarkModeTheme()
           : LightModeTheme();
 
-  Color primaryColor;
-  Color secondaryColor;
-  Color tertiaryColor;
-  Color alternate;
-  Color primaryBackground;
-  Color secondaryBackground;
-  Color primaryText;
-  Color secondaryText;
+  late Color primaryColor;
+  late Color secondaryColor;
+  late Color tertiaryColor;
+  late Color alternate;
+  late Color primaryBackground;
+  late Color secondaryBackground;
+  late Color primaryText;
+  late Color secondaryText;
 
-  Color primaryBtnText;
-  Color lineColor;
-  Color customColor1;
-  Color noColor;
-  Color grayIcon;
-  Color gray200;
-  Color gray600;
-  Color black600;
-  Color tertiary400;
-  Color textColor;
-  Color btnText;
-  Color customColor3;
-  Color customColor4;
-  Color white;
-  Color background;
-  Color backgroundComponents;
+  late Color primaryBtnText;
+  late Color lineColor;
+  late Color customColor1;
+  late Color noColor;
+  late Color grayIcon;
+  late Color gray200;
+  late Color gray600;
+  late Color black600;
+  late Color tertiary400;
+  late Color textColor;
+  late Color btnText;
+  late Color customColor3;
+  late Color customColor4;
+  late Color white;
+  late Color background;
+  late Color backgroundComponents;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -74,31 +74,31 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  Color primaryColor = const Color(0xFFFFF5F2);
-  Color secondaryColor = const Color(0xFFF74D1E);
-  Color tertiaryColor = const Color(0xFFFFF5F2);
-  Color alternate = const Color(0xF32089F4);
-  Color primaryBackground = const Color(0xFFF1F4F8);
-  Color secondaryBackground = const Color(0xFFC7D1DA);
-  Color primaryText = const Color(0xFF101213);
-  Color secondaryText = const Color(0xFFFFF5F2);
+  late Color primaryColor = const Color(0xFFFFF5F2);
+  late Color secondaryColor = const Color(0xFFF74D1E);
+  late Color tertiaryColor = const Color(0xFFFFF5F2);
+  late Color alternate = const Color(0xF32089F4);
+  late Color primaryBackground = const Color(0xFF39446B);
+  late Color secondaryBackground = const Color(0xFFC7D1DA);
+  late Color primaryText = const Color(0xFF101213);
+  late Color secondaryText = const Color(0xFFFFF5F2);
 
-  Color primaryBtnText = Color(0xFFFFFFFF);
-  Color lineColor = Color(0xFFE0E3E7);
-  Color customColor1 = Color(0xFF2FB73C);
-  Color noColor = Color(0x00FFFFFF);
-  Color grayIcon = Color(0xFF95A1AC);
-  Color gray200 = Color(0xFFDBE2E7);
-  Color gray600 = Color(0xFF262D34);
-  Color black600 = Color(0xFF090F13);
-  Color tertiary400 = Color(0xFF39D2C0);
-  Color textColor = Color(0xFF1E2429);
-  Color btnText = Color(0xFFFFFFFF);
-  Color customColor3 = Color(0xFFDF3F3F);
-  Color customColor4 = Color(0xFF090F13);
-  Color white = Color(0xFFFFFFFF);
-  Color background = Color(0xFF1D2429);
-  Color backgroundComponents = Color(0xFF1D2428);
+  late Color primaryBtnText = Color(0xFFFFFFFF);
+  late Color lineColor = Color(0xFFE0E3E7);
+  late Color customColor1 = Color(0xFF2FB73C);
+  late Color noColor = Color(0x00FFFFFF);
+  late Color grayIcon = Color(0xFF95A1AC);
+  late Color gray200 = Color(0xFFDBE2E7);
+  late Color gray600 = Color(0xFF262D34);
+  late Color black600 = Color(0xFF090F13);
+  late Color tertiary400 = Color(0xFF39D2C0);
+  late Color textColor = Color(0xFF1E2429);
+  late Color btnText = Color(0xFFFFFFFF);
+  late Color customColor3 = Color(0xFFDF3F3F);
+  late Color customColor4 = Color(0xFF090F13);
+  late Color white = Color(0xFFFFFFFF);
+  late Color background = Color(0xFF1D2429);
+  late Color backgroundComponents = Color(0xFF1D2428);
 }
 
 abstract class Typography {
@@ -175,48 +175,48 @@ class ThemeTypography extends Typography {
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
-  Color primaryColor = const Color(0x00272C2D);
-  Color secondaryColor = const Color(0xFFF74D1E);
-  Color tertiaryColor = const Color(0xFFFFF5F2);
-  Color alternate = const Color(0xF320F42D);
-  Color primaryBackground = const Color(0xFF272C2D);
-  Color secondaryBackground = const Color(0xFF76787E);
-  Color primaryText = const Color(0xFFFFFFFF);
-  Color secondaryText = const Color(0xFF191B1E);
+  late Color primaryColor = const Color(0xFFFFF5F2);
+  late Color secondaryColor = const Color(0xFFF74D1E);
+  late Color tertiaryColor = const Color(0xFFFFF5F2);
+  late Color alternate = const Color(0xF320F42D);
+  late Color primaryBackground = const Color(0xFF191F2B);
+  late Color secondaryBackground = const Color(0xFF76787E);
+  late Color primaryText = const Color(0xFFFFFFFF);
+  late Color secondaryText = const Color(0xFF191B1E);
 
-  Color primaryBtnText = Color(0xFFFFFFFF);
-  Color lineColor = Color(0xFF22282F);
-  Color customColor1 = Color(0xFF47C612);
-  Color noColor = Color(0x000F1113);
-  Color grayIcon = Color(0xFF95A1AC);
-  Color gray200 = Color(0xFFDBE2E7);
-  Color gray600 = Color(0xFF262D34);
-  Color black600 = Color(0xFF090F13);
-  Color tertiary400 = Color(0xFF39D2C0);
-  Color textColor = Color(0xFF1E2429);
-  Color btnText = Color(0xFFFFFFFF);
-  Color customColor3 = Color(0xFFDF3F3F);
-  Color customColor4 = Color(0xFF090F13);
-  Color white = Color(0xFFFFFFFF);
-  Color background = Color(0xFF1D2429);
-  Color backgroundComponents = Color(0xFF1D2428);
+  late Color primaryBtnText = Color(0xFFFFFFFF);
+  late Color lineColor = Color(0xFF22282F);
+  late Color customColor1 = Color(0xFF47C612);
+  late Color noColor = Color(0x000F1113);
+  late Color grayIcon = Color(0xFF95A1AC);
+  late Color gray200 = Color(0xFFDBE2E7);
+  late Color gray600 = Color(0xFF262D34);
+  late Color black600 = Color(0xFF090F13);
+  late Color tertiary400 = Color(0xFF39D2C0);
+  late Color textColor = Color(0xFF1E2429);
+  late Color btnText = Color(0xFFFFFFFF);
+  late Color customColor3 = Color(0xFFDF3F3F);
+  late Color customColor4 = Color(0xFF090F13);
+  late Color white = Color(0xFFFFFFFF);
+  late Color background = Color(0xFF1D2429);
+  late Color backgroundComponents = Color(0xFF1D2428);
 }
 
 extension TextStyleHelper on TextStyle {
   TextStyle override({
-    String fontFamily,
-    Color color,
-    double fontSize,
-    FontWeight fontWeight,
-    double letterSpacing,
-    FontStyle fontStyle,
+    String? fontFamily,
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+    double? letterSpacing,
+    FontStyle? fontStyle,
     bool useGoogleFonts = true,
-    TextDecoration decoration,
-    double lineHeight,
+    TextDecoration? decoration,
+    double? lineHeight,
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
-              fontFamily,
+              fontFamily!,
               color: color ?? this.color,
               fontSize: fontSize ?? this.fontSize,
               letterSpacing: letterSpacing ?? this.letterSpacing,

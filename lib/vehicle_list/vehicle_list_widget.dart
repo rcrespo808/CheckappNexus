@@ -10,11 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class VehicleListWidget extends StatefulWidget {
   const VehicleListWidget({
-    Key key,
+    Key? key,
     this.shop,
   }) : super(key: key);
 
-  final DocumentReference shop;
+  final DocumentReference? shop;
 
   @override
   _VehicleListWidgetState createState() => _VehicleListWidgetState();
@@ -57,7 +57,9 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        iconTheme:
+            IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
         automaticallyImplyLeading: true,
         title: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
@@ -65,7 +67,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
             'Selecciona un Vehiculo',
             style: FlutterFlowTheme.of(context).title2.override(
                   fontFamily: 'Exo 2',
-                  color: FlutterFlowTheme.of(context).secondaryColor,
+                  color: FlutterFlowTheme.of(context).primaryText,
                 ),
           ),
         ),
@@ -102,7 +104,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
                         );
                       }
                       List<VehiclesRecord> listViewVehiclesRecordList =
-                          snapshot.data;
+                          snapshot.data!;
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         primary: false,
@@ -122,12 +124,16 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
                                     .secondaryBackground,
                                 boxShadow: [
                                   BoxShadow(
-                                    blurRadius: 5,
-                                    color: Color(0x1F000000),
-                                    offset: Offset(0, 2),
+                                    blurRadius: 3,
+                                    color: Colors.black,
+                                    offset: Offset(0.5, 0.5),
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
                               ),
                               child: InkWell(
                                 onTap: () async {
@@ -152,13 +158,33 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           4, 4, 4, 4),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Image.network(
-                                          listViewVehiclesRecord.photo,
-                                          width: 120,
-                                          height: 100,
-                                          fit: BoxFit.cover,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 3,
+                                              color: Colors.black,
+                                              offset: Offset(0.5, 0.5),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          child: Image.network(
+                                            listViewVehiclesRecord.photo!,
+                                            width: 120,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -219,7 +245,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
                                 ),
                               ),
                             ).animated([
-                              animationsMap['containerOnPageLoadAnimation']
+                              animationsMap['containerOnPageLoadAnimation']!
                             ]),
                           );
                         },

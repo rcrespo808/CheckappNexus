@@ -9,36 +9,27 @@ part 'shops_record.g.dart';
 abstract class ShopsRecord implements Built<ShopsRecord, ShopsRecordBuilder> {
   static Serializer<ShopsRecord> get serializer => _$shopsRecordSerializer;
 
-  @nullable
-  String get logo;
+  String? get logo;
 
-  @nullable
-  String get banner;
+  String? get banner;
 
-  @nullable
-  String get name;
+  String? get name;
 
-  @nullable
-  String get description;
+  String? get description;
 
-  @nullable
-  LatLng get address;
+  LatLng? get address;
 
-  @nullable
-  BuiltList<String> get services;
+  BuiltList<String>? get services;
 
-  @nullable
-  String get addressText;
+  String? get addressText;
 
-  @nullable
-  bool get showItem;
+  bool? get showItem;
 
-  @nullable
-  DocumentReference get userId;
+  DocumentReference? get userId;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(ShopsRecordBuilder builder) => builder
     ..logo = ''
@@ -54,11 +45,11 @@ abstract class ShopsRecord implements Built<ShopsRecord, ShopsRecordBuilder> {
 
   static Stream<ShopsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<ShopsRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static ShopsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) => ShopsRecord(
         (c) => c
@@ -74,14 +65,14 @@ abstract class ShopsRecord implements Built<ShopsRecord, ShopsRecordBuilder> {
           ..addressText = snapshot.data['addressText']
           ..showItem = snapshot.data['showItem']
           ..userId = safeGet(() => toRef(snapshot.data['userId']))
-          ..reference = ShopsRecord.collection.doc(snapshot.objectID),
+          ..ffRef = ShopsRecord.collection.doc(snapshot.objectID),
       );
 
   static Future<List<ShopsRecord>> search(
-          {String term,
-          FutureOr<LatLng> location,
-          int maxResults,
-          double searchRadiusMeters}) =>
+          {String? term,
+          FutureOr<LatLng>? location,
+          int? maxResults,
+          double? searchRadiusMeters}) =>
       FFAlgoliaManager.instance
           .algoliaQuery(
             index: 'shops',
@@ -99,28 +90,34 @@ abstract class ShopsRecord implements Built<ShopsRecord, ShopsRecordBuilder> {
   static ShopsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createShopsRecordData({
-  String logo,
-  String banner,
-  String name,
-  String description,
-  LatLng address,
-  String addressText,
-  bool showItem,
-  DocumentReference userId,
-}) =>
-    serializers.toFirestore(
-        ShopsRecord.serializer,
-        ShopsRecord((s) => s
-          ..logo = logo
-          ..banner = banner
-          ..name = name
-          ..description = description
-          ..address = address
-          ..services = null
-          ..addressText = addressText
-          ..showItem = showItem
-          ..userId = userId));
+  String? logo,
+  String? banner,
+  String? name,
+  String? description,
+  LatLng? address,
+  String? addressText,
+  bool? showItem,
+  DocumentReference? userId,
+}) {
+  final firestoreData = serializers.toFirestore(
+    ShopsRecord.serializer,
+    ShopsRecord(
+      (s) => s
+        ..logo = logo
+        ..banner = banner
+        ..name = name
+        ..description = description
+        ..address = address
+        ..services = null
+        ..addressText = addressText
+        ..showItem = showItem
+        ..userId = userId,
+    ),
+  );
+
+  return firestoreData;
+}

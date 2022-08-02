@@ -14,12 +14,11 @@ import '../vehicle_detail/vehicle_detail_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key key}) : super(key: key);
+  const ProfileWidget({Key? key}) : super(key: key);
 
   @override
   _ProfileWidgetState createState() => _ProfileWidgetState();
@@ -28,21 +27,7 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
-    'containerOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 450,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 76),
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        opacity: 1,
-      ),
-    ),
-    'containerOnPageLoadAnimation2': AnimationInfo(
+    'containerOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 450,
       hideBeforeAnimating: false,
@@ -63,8 +48,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
   void initState() {
     super.initState();
     // On page load action.
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      if ((valueOrDefault(currentUserDocument?.vehicleCount, 0)) == 0) {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault(currentUserDocument?.vehicleCount, 0) == 0) {
         await showDialog(
           context: context,
           builder: (alertDialogContext) {
@@ -117,7 +102,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
             buttonSize: 60,
             icon: Icon(
               Icons.home,
-              color: FlutterFlowTheme.of(context).secondaryColor,
+              color: FlutterFlowTheme.of(context).primaryText,
               size: 30,
             ),
             onPressed: () async {
@@ -138,7 +123,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Exo 2',
-                color: FlutterFlowTheme.of(context).secondaryColor,
+                color: FlutterFlowTheme.of(context).primaryText,
               ),
         ),
         actions: [
@@ -158,7 +143,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
               },
               child: Icon(
                 Icons.settings_outlined,
-                color: FlutterFlowTheme.of(context).secondaryColor,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 40,
               ),
             ),
@@ -172,12 +157,12 @@ class _ProfileWidgetState extends State<ProfileWidget>
         onPressed: () {
           print('FloatingActionButton pressed ...');
         },
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
         elevation: 8,
         label: Container(
-          width: 160,
-          height: 40,
+          width: 150,
           decoration: BoxDecoration(
+            color: Colors.transparent,
             borderRadius: BorderRadius.circular(15),
           ),
           child: FFButtonWidget(
@@ -326,7 +311,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-0.55, -1),
+                        alignment: AlignmentDirectional(-1, -1),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 50),
                           child: FlutterFlowIconButton(
@@ -357,79 +342,59 @@ class _ProfileWidgetState extends State<ProfileWidget>
                     ],
                   ),
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                Wrap(
+                  spacing: 0,
+                  runSpacing: 0,
+                  alignment: WrapAlignment.start,
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  direction: Axis.horizontal,
+                  runAlignment: WrapAlignment.start,
+                  verticalDirection: VerticalDirection.down,
+                  clipBehavior: Clip.none,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.95,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: SingleChildScrollView(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                      child: Text(
+                        'Mis Citas',
+                        style: FlutterFlowTheme.of(context).subtitle1,
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(15, 7, 15, 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 3,
+                                color: Colors.black,
+                                offset: Offset(0.5, 0.5),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
+                            ),
+                          ),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 12, 16, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Vehiculos',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                    ),
-                                    if ((valueOrDefault(
-                                            currentUserDocument?.vehicleCount,
-                                            0)) <
-                                        3)
-                                      AuthUserStreamWidget(
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 0,
-                                          buttonSize: 40,
-                                          fillColor: Color(0xFFFF5722),
-                                          icon: Icon(
-                                            Icons.add,
-                                            color: Colors.black,
-                                            size: 25,
-                                          ),
-                                          onPressed: () async {
-                                            await Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 300),
-                                                child: CreateVehicleWidget(),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                                child: StreamBuilder<List<VehiclesRecord>>(
-                                  stream: queryVehiclesRecord(
-                                    queryBuilder: (vehiclesRecord) =>
-                                        vehiclesRecord.where('userId',
-                                            isEqualTo: currentUserReference),
+                                child: StreamBuilder<List<ServicesRecord>>(
+                                  stream: queryServicesRecord(
+                                    queryBuilder: (servicesRecord) =>
+                                        servicesRecord
+                                            .where('owner',
+                                                isEqualTo: currentUserReference)
+                                            .where('date',
+                                                isLessThan:
+                                                    getCurrentTimestamp),
                                     limit: 3,
                                   ),
                                   builder: (context, snapshot) {
@@ -445,135 +410,164 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                         ),
                                       );
                                     }
-                                    List<VehiclesRecord>
-                                        listViewVehiclesRecordList =
-                                        snapshot.data;
-                                    return RefreshIndicator(
-                                      onRefresh: () async {
-                                        final usersUpdateData =
-                                            createUsersRecordData(
-                                          vehicleCount:
-                                              listViewVehiclesRecordList.length,
-                                        );
-                                        await currentUserReference
-                                            .update(usersUpdateData);
-                                      },
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount:
-                                            listViewVehiclesRecordList.length,
-                                        itemBuilder: (context, listViewIndex) {
-                                          final listViewVehiclesRecord =
-                                              listViewVehiclesRecordList[
-                                                  listViewIndex];
-                                          return Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 0, 16, 12),
-                                            child: InkWell(
-                                              onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 300),
-                                                    reverseDuration: Duration(
-                                                        milliseconds: 300),
-                                                    child: VehicleDetailWidget(
-                                                      vehicle:
-                                                          listViewVehiclesRecord
-                                                              .reference,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 120,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0x4E1D2429),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 4,
-                                                      color: Color(0x230F1113),
-                                                      offset: Offset(0, 1),
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 8, 8, 8),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        child: Image.network(
-                                                          listViewVehiclesRecord
-                                                              .photo,
-                                                          width: 90,
-                                                          height: 100,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(12, 0,
-                                                                    0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              listViewVehiclesRecord
-                                                                  .plate,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .title1,
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
+                                    List<ServicesRecord>
+                                        listViewServicesRecordList =
+                                        snapshot.data!;
+                                    return ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount:
+                                          listViewServicesRecordList.length,
+                                      itemBuilder: (context, listViewIndex) {
+                                        final listViewServicesRecord =
+                                            listViewServicesRecordList[
+                                                listViewIndex];
+                                        return Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16, 0, 16, 12),
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .grayIcon,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 3,
+                                                  color: Colors.black,
+                                                  offset: Offset(0.5, 0.5),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(2, 2, 2, 2),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(16, 12,
+                                                                  16, 0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  listViewServicesRecord
+                                                                      .service!,
+                                                                  style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.5,
-                                                              decoration:
-                                                                  BoxDecoration(),
-                                                              child: Text(
-                                                                '${listViewVehiclesRecord.make} ${listViewVehiclesRecord.model} ${listViewVehiclesRecord.year}',
-                                                                style: FlutterFlowTheme.of(
+                                                                      .subtitle1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Exo 2',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryColor,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            width: 120,
+                                                            height: 50,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  blurRadius: 3,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  offset:
+                                                                      Offset(
+                                                                          0.5,
+                                                                          0.5),
+                                                                )
+                                                              ],
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              border:
+                                                                  Border.all(
+                                                                color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText1,
+                                                                    .primaryBtnText,
                                                               ),
                                                             ),
-                                                          ],
-                                                        ),
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    0, 0),
+                                                            child: Text(
+                                                              dateTimeFormat(
+                                                                  'd/M/y',
+                                                                  listViewServicesRecord
+                                                                      .date!),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .subtitle1,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(16, 4,
+                                                                  16, 12),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Text(
+                                                            listViewServicesRecord
+                                                                .shopName!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
+                                          ).animated([
+                                            animationsMap[
+                                                'containerOnPageLoadAnimation']!
+                                          ]),
+                                        );
+                                      },
                                     );
                                   },
                                 ),
@@ -583,194 +577,324 @@ class _ProfileWidgetState extends State<ProfileWidget>
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
+                    Column(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                          child: StreamBuilder<List<ServicesRecord>>(
-                            stream: queryServicesRecord(
-                              queryBuilder: (servicesRecord) => servicesRecord
-                                  .where('owner',
-                                      isEqualTo: currentUserReference)
-                                  .where('date',
-                                      isLessThan: getCurrentTimestamp),
-                              limit: 3,
+                          padding: EdgeInsetsDirectional.fromSTEB(15, 7, 15, 0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color: Colors.white,
+                              ),
                             ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: Color(0xFFF74D1E),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16, 12, 16, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Vehiculos',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2,
+                                        ),
+                                        if ((valueOrDefault(
+                                                currentUserDocument
+                                                    ?.vehicleCount,
+                                                0) <
+                                            3))
+                                          AuthUserStreamWidget(
+                                            child: FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 0,
+                                              buttonSize: 40,
+                                              fillColor: Color(0xFFFF5722),
+                                              icon: Icon(
+                                                Icons.add,
+                                                color: Colors.black,
+                                                size: 25,
+                                              ),
+                                              onPressed: () async {
+                                                await Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 300),
+                                                    child:
+                                                        CreateVehicleWidget(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              }
-                              List<ServicesRecord> listViewServicesRecordList =
-                                  snapshot.data;
-                              return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                primary: false,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: listViewServicesRecordList.length,
-                                itemBuilder: (context, listViewIndex) {
-                                  final listViewServicesRecord =
-                                      listViewServicesRecordList[listViewIndex];
-                                  return Padding(
+                                  Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 0, 16, 12),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x33000000),
-                                            offset: Offset(0, 2),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(12),
+                                        0, 12, 0, 0),
+                                    child: StreamBuilder<List<VehiclesRecord>>(
+                                      stream: queryVehiclesRecord(
+                                        queryBuilder: (vehiclesRecord) =>
+                                            vehiclesRecord.where('userId',
+                                                isEqualTo:
+                                                    currentUserReference),
+                                        limit: 3,
                                       ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            2, 2, 2, 2),
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
+                                                color: Color(0xFFF74D1E),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<VehiclesRecord>
+                                            listViewVehiclesRecordList =
+                                            snapshot.data!;
+                                        return RefreshIndicator(
+                                          onRefresh: () async {
+                                            final usersUpdateData =
+                                                createUsersRecordData(
+                                              vehicleCount:
+                                                  listViewVehiclesRecordList
+                                                      .length,
+                                            );
+                                            await currentUserReference!
+                                                .update(usersUpdateData);
+                                          },
+                                          child: ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount:
+                                                listViewVehiclesRecordList
+                                                    .length,
+                                            itemBuilder:
+                                                (context, listViewIndex) {
+                                              final listViewVehiclesRecord =
+                                                  listViewVehiclesRecordList[
+                                                      listViewIndex];
+                                              return Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(16, 12, 16, 0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
+                                                    .fromSTEB(16, 0, 16, 12),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    await Navigator.push(
+                                                      context,
+                                                      PageTransition(
+                                                        type: PageTransitionType
+                                                            .fade,
+                                                        duration: Duration(
+                                                            milliseconds: 300),
+                                                        reverseDuration:
+                                                            Duration(
+                                                                milliseconds:
+                                                                    300),
+                                                        child:
+                                                            VehicleDetailWidget(
+                                                          vehicle:
+                                                              listViewVehiclesRecord
+                                                                  .reference,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 120,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .grayIcon,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          blurRadius: 3,
+                                                          color: Colors.black,
+                                                          offset:
+                                                              Offset(0.5, 0.5),
+                                                        )
+                                                      ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      border: Border.all(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8, 8, 8, 8),
+                                                      child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
                                                         children: [
-                                                          Text(
-                                                            listViewServicesRecord
-                                                                .service,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Exo 2',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryColor,
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  blurRadius: 3,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  offset:
+                                                                      Offset(
+                                                                          0.5,
+                                                                          0.5),
+                                                                )
+                                                              ],
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                              border:
+                                                                  Border.all(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 1,
+                                                              ),
+                                                            ),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                              child:
+                                                                  Image.network(
+                                                                listViewVehiclesRecord
+                                                                    .photo!,
+                                                                width: 90,
+                                                                height: 100,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        5,
+                                                                        5,
+                                                                        5,
+                                                                        5),
+                                                            child: Container(
+                                                              width: 200,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                    blurRadius:
+                                                                        3,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    offset:
+                                                                        Offset(
+                                                                            0.5,
+                                                                            0.5),
+                                                                  )
+                                                                ],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  width: 1,
                                                                 ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      listViewVehiclesRecord
+                                                                          .plate!,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .title1,
+                                                                    ),
+                                                                    Text(
+                                                                      '${listViewVehiclesRecord.make} ${listViewVehiclesRecord.model} ${listViewVehiclesRecord.year}',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText1,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
-                                                      width: 120,
-                                                      height: 50,
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .primaryBackground,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0, 0),
-                                                      child: Text(
-                                                        dateTimeFormat(
-                                                            'd/M/y',
-                                                            listViewServicesRecord
-                                                                .date),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle1,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(16, 4, 16, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      listViewServicesRecord
-                                                          .shopName,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
+                                              );
+                                            },
                                           ),
-                                        ),
-                                      ),
-                                    ).animated([
-                                      animationsMap[
-                                          'containerOnPageLoadAnimation1']
-                                    ]),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Historial Reciente',
-                                  style: FlutterFlowTheme.of(context).subtitle2,
-                                ),
-                              ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

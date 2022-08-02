@@ -12,21 +12,21 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ShopServiceWidget extends StatefulWidget {
   const ShopServiceWidget({
-    Key key,
+    Key? key,
     this.shop,
     this.vehicle,
   }) : super(key: key);
 
-  final DocumentReference shop;
-  final DocumentReference vehicle;
+  final DocumentReference? shop;
+  final DocumentReference? vehicle;
 
   @override
   _ShopServiceWidgetState createState() => _ShopServiceWidgetState();
 }
 
 class _ShopServiceWidgetState extends State<ShopServiceWidget> {
-  DateTimeRange calendarSelectedDay;
-  String choiceChipsValue;
+  DateTimeRange? calendarSelectedDay;
+  String? choiceChipsValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -41,7 +41,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ShopsRecord>(
-      future: ShopsRecord.getDocumentOnce(widget.shop),
+      future: ShopsRecord.getDocumentOnce(widget.shop!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -55,7 +55,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
             ),
           );
         }
-        final shopServiceShopsRecord = snapshot.data;
+        final shopServiceShopsRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -67,7 +67,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                 'Agenda Tu Cita',
                 style: FlutterFlowTheme.of(context).title2.override(
                       fontFamily: 'Exo 2',
-                      color: FlutterFlowTheme.of(context).secondaryColor,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 22,
                     ),
               ),
@@ -85,8 +85,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
             elevation: 8,
             label: FFButtonWidget(
               onPressed: () async {
-                if ((calendarSelectedDay.end) > (getCurrentTimestamp)) {
-                  if (!((choiceChipsValue != null && choiceChipsValue != ''))) {
+                if (calendarSelectedDay!.end > getCurrentTimestamp) {
+                  if (!(choiceChipsValue != null && choiceChipsValue != '')) {
                     await showDialog(
                       context: context,
                       builder: (alertDialogContext) {
@@ -126,27 +126,70 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                   return;
                 }
 
-                final servicesCreateData = createServicesRecordData(
-                  vehicle: widget.vehicle,
-                  owner: currentUserReference,
-                  service: choiceChipsValue,
-                  date: calendarSelectedDay?.end,
-                  shop: widget.shop,
-                  ownerName: currentUserDisplayName,
-                  carName: '',
-                  shopName: shopServiceShopsRecord.name,
-                );
-                await ServicesRecord.collection.doc().set(servicesCreateData);
-                await Navigator.pushAndRemoveUntil(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.fade,
-                    duration: Duration(milliseconds: 300),
-                    reverseDuration: Duration(milliseconds: 300),
-                    child: HomePageWidget(),
-                  ),
-                  (r) => false,
-                );
+                var confirmDialogResponse = await showDialog<bool>(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('Confirmar Cita'),
+                          content:
+                              Text('Desea confirmar su cita en el taller?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, false),
+                              child: Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, true),
+                              child: Text('Confirmar'),
+                            ),
+                          ],
+                        );
+                      },
+                    ) ??
+                    false;
+                if (confirmDialogResponse) {
+                  final servicesCreateData = createServicesRecordData(
+                    vehicle: widget.vehicle,
+                    owner: currentUserReference,
+                    service: choiceChipsValue,
+                    date: calendarSelectedDay?.end,
+                    shop: widget.shop,
+                    ownerName: currentUserDisplayName,
+                    carName: '',
+                    shopName: shopServiceShopsRecord.name,
+                  );
+                  await ServicesRecord.collection.doc().set(servicesCreateData);
+                  await showDialog(
+                    context: context,
+                    builder: (alertDialogContext) {
+                      return AlertDialog(
+                        title: Text('Cita Agendada'),
+                        content: Text(
+                            'Su cita en el taller ha sido agendada, aguarde su confirmacion.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(alertDialogContext),
+                            child: Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  await Navigator.pushAndRemoveUntil(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      duration: Duration(milliseconds: 300),
+                      reverseDuration: Duration(milliseconds: 300),
+                      child: HomePageWidget(),
+                    ),
+                    (r) => false,
+                  );
+                } else {
+                  return;
+                }
               },
               text: 'Agendar',
               options: FFButtonOptions(
@@ -155,7 +198,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                 color: FlutterFlowTheme.of(context).secondaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                       fontFamily: 'Exo 2',
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primaryText,
                     ),
                 borderSide: BorderSide(
                   color: Colors.transparent,
@@ -175,29 +218,42 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
-                        width: double.infinity,
-                        height: 120,
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              shopServiceShopsRecord.name,
-                              style: FlutterFlowTheme.of(context).title1,
-                            ),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Color(0x33000000),
+                              offset: Offset(0.5, 0.5),
+                            )
                           ],
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 7, 0, 7),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                shopServiceShopsRecord.name!,
+                                style: FlutterFlowTheme.of(context).title1,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: FutureBuilder<VehiclesRecord>(
-                        future: VehiclesRecord.getDocumentOnce(widget.vehicle),
+                        future: VehiclesRecord.getDocumentOnce(widget.vehicle!),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
@@ -211,56 +267,118 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                               ),
                             );
                           }
-                          final containerVehiclesRecord = snapshot.data;
+                          final containerVehiclesRecord = snapshot.data!;
                           return Container(
                             width: double.infinity,
                             height: 120,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 3,
+                                  color: Colors.black,
+                                  offset: Offset(0.5, 0.5),
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                width: 1,
+                              ),
                             ),
                             child: Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(7, 0, 7, 0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.network(
-                                      containerVehiclesRecord.photo,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 3,
+                                          color: Colors.black,
+                                          offset: Offset(0.5, 0.5),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        containerVehiclesRecord.photo!,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        width: 150,
-                                        decoration: BoxDecoration(),
-                                        child: Text(
-                                          containerVehiclesRecord.plate,
-                                          style: FlutterFlowTheme.of(context)
-                                              .subtitle1,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 8, 8, 8),
+                                    child: Container(
+                                      width: 220,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .grayIcon,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 3,
+                                            color: Colors.black,
+                                            offset: Offset(0.5, 0.5),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          width: 1,
                                         ),
                                       ),
-                                      Container(
-                                        width: 150,
-                                        decoration: BoxDecoration(),
-                                        child: Text(
-                                          '${containerVehiclesRecord.make} ${containerVehiclesRecord.model} ${containerVehiclesRecord.year}',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            7, 0, 0, 0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(),
+                                              child: Text(
+                                                containerVehiclesRecord.plate!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(),
+                                              child: Text(
+                                                '${containerVehiclesRecord.make} ${containerVehiclesRecord.model} ${containerVehiclesRecord.year}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -269,71 +387,99 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                         },
                       ),
                     ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 2),
+                        child: Text(
+                          'Selecciona un servicio',
+                          style: FlutterFlowTheme.of(context).subtitle1,
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
-                        width: double.infinity,
-                        height: 180,
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Colors.black,
+                              offset: Offset(0.5, 0.5),
+                            )
+                          ],
                           borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                              child: Text(
-                                'Seleccione un servicio',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12, 12, 12, 12),
+                              child: FlutterFlowChoiceChips(
+                                initiallySelected: [
+                                  if (choiceChipsValue != null)
+                                    choiceChipsValue!
+                                ],
+                                options: shopServiceShopsRecord.services!
+                                    .toList()
+                                    .map((label) => ChipData(label))
+                                    .toList(),
+                                onChanged: (val) => setState(
+                                    () => choiceChipsValue = val?.first),
+                                selectedChipStyle: ChipStyle(
+                                  backgroundColor: Color(0xFF323B45),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Exo 2',
+                                        color: Colors.white,
+                                      ),
+                                  iconColor: Colors.white,
+                                  iconSize: 18,
+                                  elevation: 4,
+                                ),
+                                unselectedChipStyle: ChipStyle(
+                                  backgroundColor: Colors.white,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Exo 2',
+                                        color: Color(0xFF323B45),
+                                      ),
+                                  iconColor: Color(0xFF323B45),
+                                  iconSize: 18,
+                                  elevation: 4,
+                                ),
+                                chipSpacing: 20,
+                                multiselect: false,
+                                alignment: WrapAlignment.start,
                               ),
-                            ),
-                            FlutterFlowChoiceChips(
-                              initiallySelected: [choiceChipsValue],
-                              options:
-                                  (shopServiceShopsRecord.services.toList() ??
-                                          [])
-                                      .map((label) => ChipData(label))
-                                      .toList(),
-                              onChanged: (val) =>
-                                  setState(() => choiceChipsValue = val.first),
-                              selectedChipStyle: ChipStyle(
-                                backgroundColor: Color(0xFF323B45),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: Colors.white,
-                                    ),
-                                iconColor: Colors.white,
-                                iconSize: 18,
-                                elevation: 4,
-                              ),
-                              unselectedChipStyle: ChipStyle(
-                                backgroundColor: Colors.white,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: Color(0xFF323B45),
-                                    ),
-                                iconColor: Color(0xFF323B45),
-                                iconSize: 18,
-                                elevation: 4,
-                              ),
-                              chipSpacing: 20,
-                              multiselect: false,
-                              alignment: WrapAlignment.start,
                             ),
                           ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 2),
+                        child: Text(
+                          'Selecciona una fecha',
+                          style: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Exo 2',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
                     ),
@@ -341,74 +487,75 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
                         width: double.infinity,
-                        height: 450,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Colors.black,
+                              offset: Offset(0.5, 0.5),
+                            )
+                          ],
                           borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                              child: Text(
-                                'Seleccione una fecha',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(6, 6, 6, 6),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20, 10, 0, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 5, 0),
+                                      child: Text(
+                                        'Fecha actual:',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
                                     ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 5, 0),
-                                    child: Text(
-                                      'Fecha actual:',
+                                    Text(
+                                      dateTimeFormat(
+                                          'd/M/y', getCurrentTimestamp),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
-                                  ),
-                                  Text(
-                                    dateTimeFormat(
-                                        'd/M/y', getCurrentTimestamp),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            FlutterFlowCalendar(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              weekFormat: false,
-                              weekStartsMonday: true,
-                              onChange: (DateTimeRange newSelectedDate) {
-                                setState(() =>
-                                    calendarSelectedDay = newSelectedDate);
-                              },
-                              titleStyle: TextStyle(),
-                              dayOfWeekStyle: TextStyle(),
-                              dateStyle: TextStyle(),
-                              selectedDateStyle: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Exo 2',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
-                                  ),
-                              inactiveDateStyle: TextStyle(),
-                            ),
-                          ],
+                              FlutterFlowCalendar(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                iconColor: Colors.black,
+                                weekFormat: false,
+                                weekStartsMonday: true,
+                                onChange: (DateTimeRange? newSelectedDate) {
+                                  setState(() =>
+                                      calendarSelectedDay = newSelectedDate);
+                                },
+                                titleStyle: TextStyle(),
+                                dayOfWeekStyle: TextStyle(),
+                                dateStyle: TextStyle(),
+                                selectedDateStyle: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: 'Exo 2',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryColor,
+                                    ),
+                                inactiveDateStyle: TextStyle(),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

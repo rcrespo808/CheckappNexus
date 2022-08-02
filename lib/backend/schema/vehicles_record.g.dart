@@ -17,10 +17,10 @@ class _$VehiclesRecordSerializer
   final String wireName = 'VehiclesRecord';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, VehiclesRecord object,
+  Iterable<Object?> serialize(Serializers serializers, VehiclesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.plate;
     if (value != null) {
       result
@@ -62,7 +62,7 @@ class _$VehiclesRecordSerializer
         ..add('userId')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     value = object.createdDate;
     if (value != null) {
@@ -85,72 +85,72 @@ class _$VehiclesRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.reference;
+    value = object.ffRef;
     if (value != null) {
       result
         ..add('Document__Reference__Field')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     return result;
   }
 
   @override
   VehiclesRecord deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VehiclesRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'plate':
           result.plate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'make':
           result.make = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'model':
           result.model = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'color':
           result.color = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'photo':
           result.photo = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'userId':
           result.userId = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
         case 'createdDate':
           result.createdDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'year':
           result.year = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'isVerified':
           result.isVerified = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
-          result.reference = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+          result.ffRef = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
       }
     }
@@ -161,28 +161,28 @@ class _$VehiclesRecordSerializer
 
 class _$VehiclesRecord extends VehiclesRecord {
   @override
-  final String plate;
+  final String? plate;
   @override
-  final String make;
+  final String? make;
   @override
-  final String model;
+  final String? model;
   @override
-  final String color;
+  final String? color;
   @override
-  final String photo;
+  final String? photo;
   @override
-  final DocumentReference<Object> userId;
+  final DocumentReference<Object?>? userId;
   @override
-  final DateTime createdDate;
+  final DateTime? createdDate;
   @override
-  final String year;
+  final String? year;
   @override
-  final bool isVerified;
+  final bool? isVerified;
   @override
-  final DocumentReference<Object> reference;
+  final DocumentReference<Object?>? ffRef;
 
-  factory _$VehiclesRecord([void Function(VehiclesRecordBuilder) updates]) =>
-      (new VehiclesRecordBuilder()..update(updates)).build();
+  factory _$VehiclesRecord([void Function(VehiclesRecordBuilder)? updates]) =>
+      (new VehiclesRecordBuilder()..update(updates))._build();
 
   _$VehiclesRecord._(
       {this.plate,
@@ -194,7 +194,7 @@ class _$VehiclesRecord extends VehiclesRecord {
       this.createdDate,
       this.year,
       this.isVerified,
-      this.reference})
+      this.ffRef})
       : super._();
 
   @override
@@ -218,7 +218,7 @@ class _$VehiclesRecord extends VehiclesRecord {
         createdDate == other.createdDate &&
         year == other.year &&
         isVerified == other.isVerified &&
-        reference == other.reference;
+        ffRef == other.ffRef;
   }
 
   @override
@@ -238,12 +238,12 @@ class _$VehiclesRecord extends VehiclesRecord {
                     createdDate.hashCode),
                 year.hashCode),
             isVerified.hashCode),
-        reference.hashCode));
+        ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VehiclesRecord')
+    return (newBuiltValueToStringHelper(r'VehiclesRecord')
           ..add('plate', plate)
           ..add('make', make)
           ..add('model', model)
@@ -253,55 +253,54 @@ class _$VehiclesRecord extends VehiclesRecord {
           ..add('createdDate', createdDate)
           ..add('year', year)
           ..add('isVerified', isVerified)
-          ..add('reference', reference))
+          ..add('ffRef', ffRef))
         .toString();
   }
 }
 
 class VehiclesRecordBuilder
     implements Builder<VehiclesRecord, VehiclesRecordBuilder> {
-  _$VehiclesRecord _$v;
+  _$VehiclesRecord? _$v;
 
-  String _plate;
-  String get plate => _$this._plate;
-  set plate(String plate) => _$this._plate = plate;
+  String? _plate;
+  String? get plate => _$this._plate;
+  set plate(String? plate) => _$this._plate = plate;
 
-  String _make;
-  String get make => _$this._make;
-  set make(String make) => _$this._make = make;
+  String? _make;
+  String? get make => _$this._make;
+  set make(String? make) => _$this._make = make;
 
-  String _model;
-  String get model => _$this._model;
-  set model(String model) => _$this._model = model;
+  String? _model;
+  String? get model => _$this._model;
+  set model(String? model) => _$this._model = model;
 
-  String _color;
-  String get color => _$this._color;
-  set color(String color) => _$this._color = color;
+  String? _color;
+  String? get color => _$this._color;
+  set color(String? color) => _$this._color = color;
 
-  String _photo;
-  String get photo => _$this._photo;
-  set photo(String photo) => _$this._photo = photo;
+  String? _photo;
+  String? get photo => _$this._photo;
+  set photo(String? photo) => _$this._photo = photo;
 
-  DocumentReference<Object> _userId;
-  DocumentReference<Object> get userId => _$this._userId;
-  set userId(DocumentReference<Object> userId) => _$this._userId = userId;
+  DocumentReference<Object?>? _userId;
+  DocumentReference<Object?>? get userId => _$this._userId;
+  set userId(DocumentReference<Object?>? userId) => _$this._userId = userId;
 
-  DateTime _createdDate;
-  DateTime get createdDate => _$this._createdDate;
-  set createdDate(DateTime createdDate) => _$this._createdDate = createdDate;
+  DateTime? _createdDate;
+  DateTime? get createdDate => _$this._createdDate;
+  set createdDate(DateTime? createdDate) => _$this._createdDate = createdDate;
 
-  String _year;
-  String get year => _$this._year;
-  set year(String year) => _$this._year = year;
+  String? _year;
+  String? get year => _$this._year;
+  set year(String? year) => _$this._year = year;
 
-  bool _isVerified;
-  bool get isVerified => _$this._isVerified;
-  set isVerified(bool isVerified) => _$this._isVerified = isVerified;
+  bool? _isVerified;
+  bool? get isVerified => _$this._isVerified;
+  set isVerified(bool? isVerified) => _$this._isVerified = isVerified;
 
-  DocumentReference<Object> _reference;
-  DocumentReference<Object> get reference => _$this._reference;
-  set reference(DocumentReference<Object> reference) =>
-      _$this._reference = reference;
+  DocumentReference<Object?>? _ffRef;
+  DocumentReference<Object?>? get ffRef => _$this._ffRef;
+  set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
   VehiclesRecordBuilder() {
     VehiclesRecord._initializeBuilder(this);
@@ -319,7 +318,7 @@ class VehiclesRecordBuilder
       _createdDate = $v.createdDate;
       _year = $v.year;
       _isVerified = $v.isVerified;
-      _reference = $v.reference;
+      _ffRef = $v.ffRef;
       _$v = null;
     }
     return this;
@@ -332,12 +331,14 @@ class VehiclesRecordBuilder
   }
 
   @override
-  void update(void Function(VehiclesRecordBuilder) updates) {
+  void update(void Function(VehiclesRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$VehiclesRecord build() {
+  VehiclesRecord build() => _build();
+
+  _$VehiclesRecord _build() {
     final _$result = _$v ??
         new _$VehiclesRecord._(
             plate: plate,
@@ -349,10 +350,10 @@ class VehiclesRecordBuilder
             createdDate: createdDate,
             year: year,
             isVerified: isVerified,
-            reference: reference);
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

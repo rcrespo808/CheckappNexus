@@ -17,17 +17,17 @@ class _$ServicesRecordSerializer
   final String wireName = 'ServicesRecord';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ServicesRecord object,
+  Iterable<Object?> serialize(Serializers serializers, ServicesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.vehicle;
     if (value != null) {
       result
         ..add('vehicle')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     value = object.owner;
     if (value != null) {
@@ -35,7 +35,7 @@ class _$ServicesRecordSerializer
         ..add('owner')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     value = object.service;
     if (value != null) {
@@ -57,7 +57,7 @@ class _$ServicesRecordSerializer
         ..add('shop')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     value = object.notes;
     if (value != null) {
@@ -109,90 +109,90 @@ class _$ServicesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.reference;
+    value = object.ffRef;
     if (value != null) {
       result
         ..add('Document__Reference__Field')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     return result;
   }
 
   @override
   ServicesRecord deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ServicesRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'vehicle':
           result.vehicle = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
         case 'owner':
           result.owner = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
         case 'service':
           result.service = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'date':
           result.date = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'shop':
           result.shop = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
         case 'notes':
           result.notes.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'ownerName':
           result.ownerName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'carName':
           result.carName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'onHold':
           result.onHold = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'done':
           result.done = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'endDate':
           result.endDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'shopName':
           result.shopName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
-          result.reference = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+          result.ffRef = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
       }
     }
@@ -203,34 +203,34 @@ class _$ServicesRecordSerializer
 
 class _$ServicesRecord extends ServicesRecord {
   @override
-  final DocumentReference<Object> vehicle;
+  final DocumentReference<Object?>? vehicle;
   @override
-  final DocumentReference<Object> owner;
+  final DocumentReference<Object?>? owner;
   @override
-  final String service;
+  final String? service;
   @override
-  final DateTime date;
+  final DateTime? date;
   @override
-  final DocumentReference<Object> shop;
+  final DocumentReference<Object?>? shop;
   @override
-  final BuiltList<String> notes;
+  final BuiltList<String>? notes;
   @override
-  final String ownerName;
+  final String? ownerName;
   @override
-  final String carName;
+  final String? carName;
   @override
-  final bool onHold;
+  final bool? onHold;
   @override
-  final bool done;
+  final bool? done;
   @override
-  final DateTime endDate;
+  final DateTime? endDate;
   @override
-  final String shopName;
+  final String? shopName;
   @override
-  final DocumentReference<Object> reference;
+  final DocumentReference<Object?>? ffRef;
 
-  factory _$ServicesRecord([void Function(ServicesRecordBuilder) updates]) =>
-      (new ServicesRecordBuilder()..update(updates)).build();
+  factory _$ServicesRecord([void Function(ServicesRecordBuilder)? updates]) =>
+      (new ServicesRecordBuilder()..update(updates))._build();
 
   _$ServicesRecord._(
       {this.vehicle,
@@ -245,7 +245,7 @@ class _$ServicesRecord extends ServicesRecord {
       this.done,
       this.endDate,
       this.shopName,
-      this.reference})
+      this.ffRef})
       : super._();
 
   @override
@@ -272,7 +272,7 @@ class _$ServicesRecord extends ServicesRecord {
         done == other.done &&
         endDate == other.endDate &&
         shopName == other.shopName &&
-        reference == other.reference;
+        ffRef == other.ffRef;
   }
 
   @override
@@ -300,12 +300,12 @@ class _$ServicesRecord extends ServicesRecord {
                     done.hashCode),
                 endDate.hashCode),
             shopName.hashCode),
-        reference.hashCode));
+        ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ServicesRecord')
+    return (newBuiltValueToStringHelper(r'ServicesRecord')
           ..add('vehicle', vehicle)
           ..add('owner', owner)
           ..add('service', service)
@@ -318,67 +318,66 @@ class _$ServicesRecord extends ServicesRecord {
           ..add('done', done)
           ..add('endDate', endDate)
           ..add('shopName', shopName)
-          ..add('reference', reference))
+          ..add('ffRef', ffRef))
         .toString();
   }
 }
 
 class ServicesRecordBuilder
     implements Builder<ServicesRecord, ServicesRecordBuilder> {
-  _$ServicesRecord _$v;
+  _$ServicesRecord? _$v;
 
-  DocumentReference<Object> _vehicle;
-  DocumentReference<Object> get vehicle => _$this._vehicle;
-  set vehicle(DocumentReference<Object> vehicle) => _$this._vehicle = vehicle;
+  DocumentReference<Object?>? _vehicle;
+  DocumentReference<Object?>? get vehicle => _$this._vehicle;
+  set vehicle(DocumentReference<Object?>? vehicle) => _$this._vehicle = vehicle;
 
-  DocumentReference<Object> _owner;
-  DocumentReference<Object> get owner => _$this._owner;
-  set owner(DocumentReference<Object> owner) => _$this._owner = owner;
+  DocumentReference<Object?>? _owner;
+  DocumentReference<Object?>? get owner => _$this._owner;
+  set owner(DocumentReference<Object?>? owner) => _$this._owner = owner;
 
-  String _service;
-  String get service => _$this._service;
-  set service(String service) => _$this._service = service;
+  String? _service;
+  String? get service => _$this._service;
+  set service(String? service) => _$this._service = service;
 
-  DateTime _date;
-  DateTime get date => _$this._date;
-  set date(DateTime date) => _$this._date = date;
+  DateTime? _date;
+  DateTime? get date => _$this._date;
+  set date(DateTime? date) => _$this._date = date;
 
-  DocumentReference<Object> _shop;
-  DocumentReference<Object> get shop => _$this._shop;
-  set shop(DocumentReference<Object> shop) => _$this._shop = shop;
+  DocumentReference<Object?>? _shop;
+  DocumentReference<Object?>? get shop => _$this._shop;
+  set shop(DocumentReference<Object?>? shop) => _$this._shop = shop;
 
-  ListBuilder<String> _notes;
+  ListBuilder<String>? _notes;
   ListBuilder<String> get notes => _$this._notes ??= new ListBuilder<String>();
-  set notes(ListBuilder<String> notes) => _$this._notes = notes;
+  set notes(ListBuilder<String>? notes) => _$this._notes = notes;
 
-  String _ownerName;
-  String get ownerName => _$this._ownerName;
-  set ownerName(String ownerName) => _$this._ownerName = ownerName;
+  String? _ownerName;
+  String? get ownerName => _$this._ownerName;
+  set ownerName(String? ownerName) => _$this._ownerName = ownerName;
 
-  String _carName;
-  String get carName => _$this._carName;
-  set carName(String carName) => _$this._carName = carName;
+  String? _carName;
+  String? get carName => _$this._carName;
+  set carName(String? carName) => _$this._carName = carName;
 
-  bool _onHold;
-  bool get onHold => _$this._onHold;
-  set onHold(bool onHold) => _$this._onHold = onHold;
+  bool? _onHold;
+  bool? get onHold => _$this._onHold;
+  set onHold(bool? onHold) => _$this._onHold = onHold;
 
-  bool _done;
-  bool get done => _$this._done;
-  set done(bool done) => _$this._done = done;
+  bool? _done;
+  bool? get done => _$this._done;
+  set done(bool? done) => _$this._done = done;
 
-  DateTime _endDate;
-  DateTime get endDate => _$this._endDate;
-  set endDate(DateTime endDate) => _$this._endDate = endDate;
+  DateTime? _endDate;
+  DateTime? get endDate => _$this._endDate;
+  set endDate(DateTime? endDate) => _$this._endDate = endDate;
 
-  String _shopName;
-  String get shopName => _$this._shopName;
-  set shopName(String shopName) => _$this._shopName = shopName;
+  String? _shopName;
+  String? get shopName => _$this._shopName;
+  set shopName(String? shopName) => _$this._shopName = shopName;
 
-  DocumentReference<Object> _reference;
-  DocumentReference<Object> get reference => _$this._reference;
-  set reference(DocumentReference<Object> reference) =>
-      _$this._reference = reference;
+  DocumentReference<Object?>? _ffRef;
+  DocumentReference<Object?>? get ffRef => _$this._ffRef;
+  set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
   ServicesRecordBuilder() {
     ServicesRecord._initializeBuilder(this);
@@ -399,7 +398,7 @@ class ServicesRecordBuilder
       _done = $v.done;
       _endDate = $v.endDate;
       _shopName = $v.shopName;
-      _reference = $v.reference;
+      _ffRef = $v.ffRef;
       _$v = null;
     }
     return this;
@@ -412,12 +411,14 @@ class ServicesRecordBuilder
   }
 
   @override
-  void update(void Function(ServicesRecordBuilder) updates) {
+  void update(void Function(ServicesRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ServicesRecord build() {
+  ServicesRecord build() => _build();
+
+  _$ServicesRecord _build() {
     _$ServicesRecord _$result;
     try {
       _$result = _$v ??
@@ -434,15 +435,15 @@ class ServicesRecordBuilder
               done: done,
               endDate: endDate,
               shopName: shopName,
-              reference: reference);
+              ffRef: ffRef);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'notes';
         _notes?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ServicesRecord', _$failedField, e.toString());
+            r'ServicesRecord', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -451,4 +452,4 @@ class ServicesRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

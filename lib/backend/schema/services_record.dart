@@ -11,45 +11,33 @@ abstract class ServicesRecord
   static Serializer<ServicesRecord> get serializer =>
       _$servicesRecordSerializer;
 
-  @nullable
-  DocumentReference get vehicle;
+  DocumentReference? get vehicle;
 
-  @nullable
-  DocumentReference get owner;
+  DocumentReference? get owner;
 
-  @nullable
-  String get service;
+  String? get service;
 
-  @nullable
-  DateTime get date;
+  DateTime? get date;
 
-  @nullable
-  DocumentReference get shop;
+  DocumentReference? get shop;
 
-  @nullable
-  BuiltList<String> get notes;
+  BuiltList<String>? get notes;
 
-  @nullable
-  String get ownerName;
+  String? get ownerName;
 
-  @nullable
-  String get carName;
+  String? get carName;
 
-  @nullable
-  bool get onHold;
+  bool? get onHold;
 
-  @nullable
-  bool get done;
+  bool? get done;
 
-  @nullable
-  DateTime get endDate;
+  DateTime? get endDate;
 
-  @nullable
-  String get shopName;
+  String? get shopName;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(ServicesRecordBuilder builder) => builder
     ..service = ''
@@ -65,11 +53,11 @@ abstract class ServicesRecord
 
   static Stream<ServicesRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<ServicesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   ServicesRecord._();
   factory ServicesRecord([void Function(ServicesRecordBuilder) updates]) =
@@ -78,34 +66,40 @@ abstract class ServicesRecord
   static ServicesRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createServicesRecordData({
-  DocumentReference vehicle,
-  DocumentReference owner,
-  String service,
-  DateTime date,
-  DocumentReference shop,
-  String ownerName,
-  String carName,
-  bool onHold,
-  bool done,
-  DateTime endDate,
-  String shopName,
-}) =>
-    serializers.toFirestore(
-        ServicesRecord.serializer,
-        ServicesRecord((s) => s
-          ..vehicle = vehicle
-          ..owner = owner
-          ..service = service
-          ..date = date
-          ..shop = shop
-          ..notes = null
-          ..ownerName = ownerName
-          ..carName = carName
-          ..onHold = onHold
-          ..done = done
-          ..endDate = endDate
-          ..shopName = shopName));
+  DocumentReference? vehicle,
+  DocumentReference? owner,
+  String? service,
+  DateTime? date,
+  DocumentReference? shop,
+  String? ownerName,
+  String? carName,
+  bool? onHold,
+  bool? done,
+  DateTime? endDate,
+  String? shopName,
+}) {
+  final firestoreData = serializers.toFirestore(
+    ServicesRecord.serializer,
+    ServicesRecord(
+      (s) => s
+        ..vehicle = vehicle
+        ..owner = owner
+        ..service = service
+        ..date = date
+        ..shop = shop
+        ..notes = null
+        ..ownerName = ownerName
+        ..carName = carName
+        ..onHold = onHold
+        ..done = done
+        ..endDate = endDate
+        ..shopName = shopName,
+    ),
+  );
+
+  return firestoreData;
+}

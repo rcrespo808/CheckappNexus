@@ -15,10 +15,10 @@ class _$ShopsRecordSerializer implements StructuredSerializer<ShopsRecord> {
   final String wireName = 'ShopsRecord';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ShopsRecord object,
+  Iterable<Object?> serialize(Serializers serializers, ShopsRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.logo;
     if (value != null) {
       result
@@ -82,75 +82,75 @@ class _$ShopsRecordSerializer implements StructuredSerializer<ShopsRecord> {
         ..add('userId')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
-    value = object.reference;
+    value = object.ffRef;
     if (value != null) {
       result
         ..add('Document__Reference__Field')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     return result;
   }
 
   @override
-  ShopsRecord deserialize(Serializers serializers, Iterable<Object> serialized,
+  ShopsRecord deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ShopsRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'logo':
           result.logo = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'banner':
           result.banner = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'description':
           result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'address':
           result.address = serializers.deserialize(value,
-              specifiedType: const FullType(LatLng)) as LatLng;
+              specifiedType: const FullType(LatLng)) as LatLng?;
           break;
         case 'services':
           result.services.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'addressText':
           result.addressText = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'showItem':
           result.showItem = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'userId':
           result.userId = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
         case 'Document__Reference__Field':
-          result.reference = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+          result.ffRef = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
       }
     }
@@ -161,28 +161,28 @@ class _$ShopsRecordSerializer implements StructuredSerializer<ShopsRecord> {
 
 class _$ShopsRecord extends ShopsRecord {
   @override
-  final String logo;
+  final String? logo;
   @override
-  final String banner;
+  final String? banner;
   @override
-  final String name;
+  final String? name;
   @override
-  final String description;
+  final String? description;
   @override
-  final LatLng address;
+  final LatLng? address;
   @override
-  final BuiltList<String> services;
+  final BuiltList<String>? services;
   @override
-  final String addressText;
+  final String? addressText;
   @override
-  final bool showItem;
+  final bool? showItem;
   @override
-  final DocumentReference<Object> userId;
+  final DocumentReference<Object?>? userId;
   @override
-  final DocumentReference<Object> reference;
+  final DocumentReference<Object?>? ffRef;
 
-  factory _$ShopsRecord([void Function(ShopsRecordBuilder) updates]) =>
-      (new ShopsRecordBuilder()..update(updates)).build();
+  factory _$ShopsRecord([void Function(ShopsRecordBuilder)? updates]) =>
+      (new ShopsRecordBuilder()..update(updates))._build();
 
   _$ShopsRecord._(
       {this.logo,
@@ -194,7 +194,7 @@ class _$ShopsRecord extends ShopsRecord {
       this.addressText,
       this.showItem,
       this.userId,
-      this.reference})
+      this.ffRef})
       : super._();
 
   @override
@@ -217,7 +217,7 @@ class _$ShopsRecord extends ShopsRecord {
         addressText == other.addressText &&
         showItem == other.showItem &&
         userId == other.userId &&
-        reference == other.reference;
+        ffRef == other.ffRef;
   }
 
   @override
@@ -237,12 +237,12 @@ class _$ShopsRecord extends ShopsRecord {
                     addressText.hashCode),
                 showItem.hashCode),
             userId.hashCode),
-        reference.hashCode));
+        ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ShopsRecord')
+    return (newBuiltValueToStringHelper(r'ShopsRecord')
           ..add('logo', logo)
           ..add('banner', banner)
           ..add('name', name)
@@ -252,55 +252,54 @@ class _$ShopsRecord extends ShopsRecord {
           ..add('addressText', addressText)
           ..add('showItem', showItem)
           ..add('userId', userId)
-          ..add('reference', reference))
+          ..add('ffRef', ffRef))
         .toString();
   }
 }
 
 class ShopsRecordBuilder implements Builder<ShopsRecord, ShopsRecordBuilder> {
-  _$ShopsRecord _$v;
+  _$ShopsRecord? _$v;
 
-  String _logo;
-  String get logo => _$this._logo;
-  set logo(String logo) => _$this._logo = logo;
+  String? _logo;
+  String? get logo => _$this._logo;
+  set logo(String? logo) => _$this._logo = logo;
 
-  String _banner;
-  String get banner => _$this._banner;
-  set banner(String banner) => _$this._banner = banner;
+  String? _banner;
+  String? get banner => _$this._banner;
+  set banner(String? banner) => _$this._banner = banner;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _description;
-  String get description => _$this._description;
-  set description(String description) => _$this._description = description;
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
-  LatLng _address;
-  LatLng get address => _$this._address;
-  set address(LatLng address) => _$this._address = address;
+  LatLng? _address;
+  LatLng? get address => _$this._address;
+  set address(LatLng? address) => _$this._address = address;
 
-  ListBuilder<String> _services;
+  ListBuilder<String>? _services;
   ListBuilder<String> get services =>
       _$this._services ??= new ListBuilder<String>();
-  set services(ListBuilder<String> services) => _$this._services = services;
+  set services(ListBuilder<String>? services) => _$this._services = services;
 
-  String _addressText;
-  String get addressText => _$this._addressText;
-  set addressText(String addressText) => _$this._addressText = addressText;
+  String? _addressText;
+  String? get addressText => _$this._addressText;
+  set addressText(String? addressText) => _$this._addressText = addressText;
 
-  bool _showItem;
-  bool get showItem => _$this._showItem;
-  set showItem(bool showItem) => _$this._showItem = showItem;
+  bool? _showItem;
+  bool? get showItem => _$this._showItem;
+  set showItem(bool? showItem) => _$this._showItem = showItem;
 
-  DocumentReference<Object> _userId;
-  DocumentReference<Object> get userId => _$this._userId;
-  set userId(DocumentReference<Object> userId) => _$this._userId = userId;
+  DocumentReference<Object?>? _userId;
+  DocumentReference<Object?>? get userId => _$this._userId;
+  set userId(DocumentReference<Object?>? userId) => _$this._userId = userId;
 
-  DocumentReference<Object> _reference;
-  DocumentReference<Object> get reference => _$this._reference;
-  set reference(DocumentReference<Object> reference) =>
-      _$this._reference = reference;
+  DocumentReference<Object?>? _ffRef;
+  DocumentReference<Object?>? get ffRef => _$this._ffRef;
+  set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
   ShopsRecordBuilder() {
     ShopsRecord._initializeBuilder(this);
@@ -318,7 +317,7 @@ class ShopsRecordBuilder implements Builder<ShopsRecord, ShopsRecordBuilder> {
       _addressText = $v.addressText;
       _showItem = $v.showItem;
       _userId = $v.userId;
-      _reference = $v.reference;
+      _ffRef = $v.ffRef;
       _$v = null;
     }
     return this;
@@ -331,12 +330,14 @@ class ShopsRecordBuilder implements Builder<ShopsRecord, ShopsRecordBuilder> {
   }
 
   @override
-  void update(void Function(ShopsRecordBuilder) updates) {
+  void update(void Function(ShopsRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ShopsRecord build() {
+  ShopsRecord build() => _build();
+
+  _$ShopsRecord _build() {
     _$ShopsRecord _$result;
     try {
       _$result = _$v ??
@@ -350,15 +351,15 @@ class ShopsRecordBuilder implements Builder<ShopsRecord, ShopsRecordBuilder> {
               addressText: addressText,
               showItem: showItem,
               userId: userId,
-              reference: reference);
+              ffRef: ffRef);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'services';
         _services?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ShopsRecord', _$failedField, e.toString());
+            r'ShopsRecord', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -367,4 +368,4 @@ class ShopsRecordBuilder implements Builder<ShopsRecord, ShopsRecordBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

@@ -11,21 +11,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../auth/auth_util.dart';
 
 int calculateDistance(
-  LatLng pointOne,
-  LatLng pointTwo,
+  LatLng? pointOne,
+  LatLng? pointTwo,
 ) {
   // return distance as if in plane in kilometers
   int distanceInKms = 0;
   double earthsRadious = 6371;
   double errorMargin = 1.02;
-  double p1lat = double.parse(pointOne.latitude.toStringAsFixed(6));
-  double p1lon = double.parse(pointOne.longitude.toStringAsFixed(6));
-  double p2lat = double.parse(pointTwo.latitude.toStringAsFixed(6));
-  double p2lon = double.parse(pointTwo.longitude.toStringAsFixed(6));
-  double distLat =
-      (p1lat - p2lat) * double.parse((math.pi / 180).toStringAsFixed(6));
-  double distLon =
-      (p1lon - p2lon) * double.parse((math.pi / 180).toStringAsFixed(6));
+
+  if (pointOne == null || pointTwo == null || pointOne == pointTwo) {
+    return 0;
+  }
+
+  double distLat = (pointOne.latitude - pointTwo.latitude) *
+      double.parse((math.pi / 180).toStringAsFixed(6));
+  double distLon = (pointOne.longitude - pointTwo.longitude) *
+      double.parse((math.pi / 180).toStringAsFixed(6));
 
   double a = math.sin(distLat / 2) * math.sin(distLat / 2) +
       math.cos(pointOne.latitude * (math.pi / 180)) *
@@ -39,8 +40,9 @@ int calculateDistance(
   return distanceInKms;
 }
 
-String latlongtostring(LatLng latlon) {
+String latlongtostring(LatLng? latlon) {
   // convert laton to string show 4 decimals
+  if (latlon == null) return "";
   var result = '';
   result += latlon.latitude.toStringAsFixed(6);
   result += ' , ' + latlon.longitude.toStringAsFixed(6);

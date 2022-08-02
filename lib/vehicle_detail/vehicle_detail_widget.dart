@@ -17,11 +17,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class VehicleDetailWidget extends StatefulWidget {
   const VehicleDetailWidget({
-    Key key,
+    Key? key,
     this.vehicle,
   }) : super(key: key);
 
-  final DocumentReference vehicle;
+  final DocumentReference? vehicle;
 
   @override
   _VehicleDetailWidgetState createState() => _VehicleDetailWidgetState();
@@ -61,7 +61,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<VehiclesRecord>(
-      stream: VehiclesRecord.getDocument(widget.vehicle),
+      stream: VehiclesRecord.getDocument(widget.vehicle!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -75,7 +75,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
             ),
           );
         }
-        final vehicleDetailVehiclesRecord = snapshot.data;
+        final vehicleDetailVehiclesRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -87,7 +87,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
               'Detalles',
               style: FlutterFlowTheme.of(context).title1.override(
                     fontFamily: 'Exo 2',
-                    color: FlutterFlowTheme.of(context).secondaryColor,
+                    color: FlutterFlowTheme.of(context).primaryText,
                   ),
             ),
             actions: [],
@@ -101,181 +101,299 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.75,
-                          decoration: BoxDecoration(),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                            child: Text(
-                              '${vehicleDetailVehiclesRecord.plate} ${vehicleDetailVehiclesRecord.make} ${vehicleDetailVehiclesRecord.model} ${vehicleDetailVehiclesRecord.year}',
-                              style: FlutterFlowTheme.of(context).title1,
-                            ),
-                          ),
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3,
+                            color: Colors.black,
+                            offset: Offset(0.5, 0.5),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          width: 1,
                         ),
-                        if (!(vehicleDetailVehiclesRecord.isVerified) ?? true)
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 60,
-                            icon: Icon(
-                              Icons.edit,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 15,
-                            ),
-                            onPressed: () async {
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 300),
-                                  reverseDuration: Duration(milliseconds: 300),
-                                  child: ModifyVehicleWidget(
-                                    vehicle: widget.vehicle,
-                                  ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(24, 4, 24, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                child: Text(
+                                  '${vehicleDetailVehiclesRecord.plate} ${vehicleDetailVehiclesRecord.make} ${vehicleDetailVehiclesRecord.model} ${vehicleDetailVehiclesRecord.year}',
+                                  style: FlutterFlowTheme.of(context).title1,
                                 ),
-                              );
-                            },
-                          ),
-                      ],
+                              ),
+                            ),
+                            if (!vehicleDetailVehiclesRecord.isVerified!)
+                              Align(
+                                alignment: AlignmentDirectional(1, 0),
+                                child: FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 60,
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 15,
+                                  ),
+                                  onPressed: () async {
+                                    await Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 300),
+                                        reverseDuration:
+                                            Duration(milliseconds: 300),
+                                        child: ModifyVehicleWidget(
+                                          vehicle: widget.vehicle,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  Stack(
-                    children: [
-                      Padding(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3,
+                            color: Colors.black,
+                            offset: Offset(0.5, 0.5),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 16),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
                           child: Image.network(
-                            vehicleDetailVehiclesRecord.photo,
+                            vehicleDetailVehiclesRecord.photo!,
                             width: MediaQuery.of(context).size.width,
                             height: 240,
                             fit: BoxFit.cover,
                           ),
-                        ).animated([animationsMap['imageOnPageLoadAnimation']]),
+                        ).animated(
+                            [animationsMap['imageOnPageLoadAnimation']!]),
                       ),
-                    ],
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3,
+                            color: Colors.black,
+                            offset: Offset(0.5, 0.5),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 1,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+                        child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Creado en:',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                  EdgeInsetsDirectional.fromSTEB(7, 5, 0, 5),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Text(
+                                      'Creado en:',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Exo 2',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
                                     ),
+                                  ),
+                                  Text(
+                                    dateTimeFormat(
+                                        'd/M/y',
+                                        vehicleDetailVehiclesRecord
+                                            .createdDate!),
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Exo 2',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              dateTimeFormat('d/M/y',
-                                  vehicleDetailVehiclesRecord.createdDate),
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
-                                        fontFamily: 'Exo 2',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (!vehicleDetailVehiclesRecord
+                                          .isVerified!)
+                                        InkWell(
+                                          onLongPress: () async {
+                                            var confirmDialogResponse =
+                                                await showDialog<bool>(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              'Eliminar Vehiculo'),
+                                                          content: Text(
+                                                              'Eliminar un vehiculo es una accion permanente y no se puede revertir\nDesea continuar?'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      false),
+                                                              child: Text(
+                                                                  'Cancelar'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      true),
+                                                              child: Text(
+                                                                  'Confirmar'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ) ??
+                                                    false;
+                                            if (confirmDialogResponse) {
+                                              await vehicleDetailVehiclesRecord
+                                                  .reference
+                                                  .delete();
+
+                                              final usersUpdateData = {
+                                                'vehicleCount':
+                                                    FieldValue.increment(-(1)),
+                                              };
+                                              await currentUserReference!
+                                                  .update(usersUpdateData);
+                                              await Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  reverseDuration: Duration(
+                                                      milliseconds: 300),
+                                                  child: ProfileWidget(),
+                                                ),
+                                              );
+                                            } else {
+                                              return;
+                                            }
+                                          },
+                                          child: FFButtonWidget(
+                                            onPressed: () {
+                                              print('Button pressed ...');
+                                            },
+                                            text: 'Eliminar',
+                                            icon: FaIcon(
+                                              FontAwesomeIcons.trashAlt,
+                                            ),
+                                            options: FFButtonOptions(
+                                              width: 130,
+                                              height: 40,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .customColor3,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Exo 2',
+                                                        color: Colors.white,
+                                                      ),
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                          ),
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12, 6, 12, 0),
+                                        child: Text(
+                                          'Mantener presionado para eliminar',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Exo 2',
+                                                fontSize: 10,
+                                              ),
+                                        ),
                                       ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        if (!(vehicleDetailVehiclesRecord.isVerified) ?? true)
-                          InkWell(
-                            onLongPress: () async {
-                              var confirmDialogResponse =
-                                  await showDialog<bool>(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Eliminar Vehiculo'),
-                                            content: Text(
-                                                'Eliminar un vehiculo es una accion permanente y no se puede revertir\nDesea continuar?'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, false),
-                                                child: Text('Cancelar'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, true),
-                                                child: Text('Confirmar'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ) ??
-                                      false;
-                              if (confirmDialogResponse) {
-                                await vehicleDetailVehiclesRecord.reference
-                                    .delete();
-
-                                final usersUpdateData = {
-                                  'vehicleCount': FieldValue.increment(-(1)),
-                                };
-                                await currentUserReference
-                                    .update(usersUpdateData);
-                                await Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 300),
-                                    reverseDuration:
-                                        Duration(milliseconds: 300),
-                                    child: ProfileWidget(),
-                                  ),
-                                );
-                              } else {
-                                return;
-                              }
-                            },
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'Eliminar',
-                              icon: FaIcon(
-                                FontAwesomeIcons.trashAlt,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 40,
-                                color:
-                                    FlutterFlowTheme.of(context).customColor3,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: Colors.white,
-                                    ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                      ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -312,20 +430,29 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                           );
                         }
                         List<ServicesRecord> containerServicesRecordList =
-                            snapshot.data;
+                            snapshot.data!;
                         // Return an empty Container when the document does not exist.
-                        if (snapshot.data.isEmpty) {
+                        if (snapshot.data!.isEmpty) {
                           return Container();
                         }
                         final containerServicesRecord =
-                            containerServicesRecordList.isNotEmpty
-                                ? containerServicesRecordList.first
-                                : null;
+                            containerServicesRecordList.first;
                         return Container(
-                          width: 500,
-                          height: 350,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 3,
+                                color: Colors.black,
+                                offset: Offset(0.5, 0.5),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
+                            ),
                           ),
                           child: FutureBuilder<List<ServicesRecord>>(
                             future: queryServicesRecordOnce(
@@ -350,15 +477,13 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                 );
                               }
                               List<ServicesRecord> columnServicesRecordList =
-                                  snapshot.data;
+                                  snapshot.data!;
                               // Return an empty Container when the document does not exist.
-                              if (snapshot.data.isEmpty) {
+                              if (snapshot.data!.isEmpty) {
                                 return Container();
                               }
                               final columnServicesRecord =
-                                  columnServicesRecordList.isNotEmpty
-                                      ? columnServicesRecordList.first
-                                      : null;
+                                  columnServicesRecordList.first;
                               return Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -369,7 +494,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
+                                            0, 7, 0, 8),
                                         child: Text(
                                           'Ultimo Servicio:',
                                           style: FlutterFlowTheme.of(context)
@@ -405,15 +530,19 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                       height: 100,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                                            .grayIcon,
                                         boxShadow: [
                                           BoxShadow(
-                                            blurRadius: 4,
-                                            color: Color(0x43000000),
-                                            offset: Offset(0, 2),
+                                            blurRadius: 3,
+                                            color: Colors.black,
+                                            offset: Offset(0.5, 0.5),
                                           )
                                         ],
                                         borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
                                       ),
                                       child: InkWell(
                                         onTap: () async {
@@ -482,7 +611,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                         children: [
                                                           Text(
                                                             columnServicesRecord
-                                                                .service,
+                                                                .service!,
                                                             textAlign:
                                                                 TextAlign.start,
                                                             style: FlutterFlowTheme
@@ -503,7 +632,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                         children: [
                                                           Text(
                                                             columnServicesRecord
-                                                                .shopName,
+                                                                .shopName!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyText1
@@ -570,13 +699,17 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                       .secondaryColor,
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      blurRadius: 4,
-                                                      color: Color(0x37000000),
-                                                      offset: Offset(0, 1),
+                                                      blurRadius: 3,
+                                                      color: Colors.black,
+                                                      offset: Offset(0.5, 0.5),
                                                     )
                                                   ],
                                                   borderRadius:
                                                       BorderRadius.circular(8),
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                                 child: InkWell(
                                                   onTap: () async {

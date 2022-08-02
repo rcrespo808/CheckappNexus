@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPassWidget extends StatefulWidget {
-  const ForgotPassWidget({Key key}) : super(key: key);
+  const ForgotPassWidget({Key? key}) : super(key: key);
 
   @override
   _ForgotPassWidgetState createState() => _ForgotPassWidgetState();
 }
 
 class _ForgotPassWidgetState extends State<ForgotPassWidget> {
-  TextEditingController emailAddressController;
+  TextEditingController? emailAddressController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -66,8 +66,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                         'Atras',
                         style: FlutterFlowTheme.of(context).title1.override(
                               fontFamily: 'Exo 2',
-                              color:
-                                  FlutterFlowTheme.of(context).secondaryColor,
+                              color: FlutterFlowTheme.of(context).primaryText,
                             ),
                       ),
                     ),
@@ -124,46 +123,54 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 5,
-                    color: Color(0x4D101213),
-                    offset: Offset(0, 2),
+                    blurRadius: 3,
+                    color: Colors.black,
+                    offset: Offset(0.5, 0.5),
                   )
                 ],
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                ),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(1, 1, 1, 1),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                 child: TextFormField(
                   controller: emailAddressController,
                   obscureText: false,
                   decoration: InputDecoration(
-                    labelText: 'Tu direccion de correo...',
-                    labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                    hintText: 'Ingresa tu email...',
+                    labelText: 'Email',
+                    labelStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Lexend Deca',
+                          color: Color(0xFF95A1AC),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                    hintText: 'Email',
                     hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Lexend Deca',
-                          color: Color(0xFF57636C),
+                          color: Color(0xFF95A1AC),
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        color: Color(0x00000000),
                         width: 0,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        color: Color(0x00000000),
                         width: 0,
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                     contentPadding:
-                        EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
+                        EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Exo 2',
@@ -178,7 +185,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
             child: FFButtonWidget(
               onPressed: () async {
-                if (emailAddressController.text.isEmpty) {
+                if (emailAddressController!.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
@@ -189,7 +196,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                   return;
                 }
                 await resetPassword(
-                  email: emailAddressController.text,
+                  email: emailAddressController!.text,
                   context: context,
                 );
               },

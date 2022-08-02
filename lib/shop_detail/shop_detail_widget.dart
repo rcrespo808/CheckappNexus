@@ -1,4 +1,5 @@
 import '../backend/backend.dart';
+import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_static_map.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -14,24 +15,25 @@ import 'package:mapbox_search/mapbox_search.dart';
 
 class ShopDetailWidget extends StatefulWidget {
   const ShopDetailWidget({
-    Key key,
+    Key? key,
     this.shopParameter,
   }) : super(key: key);
 
-  final DocumentReference shopParameter;
+  final DocumentReference? shopParameter;
 
   @override
   _ShopDetailWidgetState createState() => _ShopDetailWidgetState();
 }
 
 class _ShopDetailWidgetState extends State<ShopDetailWidget> {
-  String shopMapLink;
+  String? choiceChipsValue;
+  String? shopMapLink;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ShopsRecord>(
-      future: ShopsRecord.getDocumentOnce(widget.shopParameter),
+      future: ShopsRecord.getDocumentOnce(widget.shopParameter!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -45,19 +47,21 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
             ),
           );
         }
-        final shopDetailShopsRecord = snapshot.data;
+        final shopDetailShopsRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            iconTheme:
+                IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
             automaticallyImplyLeading: true,
             title: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(85, 0, 0, 0),
               child: Text(
-                shopDetailShopsRecord.name,
+                shopDetailShopsRecord.name!,
                 style: FlutterFlowTheme.of(context).title1.override(
                       fontFamily: 'Exo 2',
-                      color: FlutterFlowTheme.of(context).secondaryColor,
+                      color: FlutterFlowTheme.of(context).primaryText,
                     ),
               ),
             ),
@@ -115,11 +119,21 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 500,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: FlutterFlowTheme.of(context).customColor4,
+                              offset: Offset(0.5, 0.5),
+                            )
+                          ],
                           borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).white,
+                            width: 1,
+                          ),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -135,13 +149,28 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                                 ),
                                 child: Stack(
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          1, 16, 0, 0),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 3,
+                                            color: Colors.black,
+                                            offset: Offset(0.5, 0.5),
+                                          )
+                                        ],
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .white,
+                                          width: 1,
+                                        ),
+                                      ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
-                                        child: Image.asset(
-                                          'assets/images/istockphoto-1284285171-170667a.jpg',
+                                        child: Image.network(
+                                          shopDetailShopsRecord.banner!,
                                           width:
                                               MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context)
@@ -153,38 +182,39 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                                       ),
                                     ),
                                     Align(
-                                      alignment:
-                                          AlignmentDirectional(1.01, 1.04),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 220, 210),
-                                        child: Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            border: Border.all(
+                                      alignment: AlignmentDirectional(0.9, 0.9),
+                                      child: Container(
+                                        width: 100,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 3,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondaryColor,
-                                              width: 3,
-                                            ),
+                                                      .primaryColor,
+                                              offset: Offset(0.5, 0.5),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryColor,
+                                            width: 2,
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 3),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.asset(
-                                                'assets/images/gxif9_600',
-                                                width: 100,
-                                                height: 100,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
+                                        ),
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Image.network(
+                                            shopDetailShopsRecord.logo!,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -195,19 +225,31 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                                  EdgeInsetsDirectional.fromSTEB(16, 12, 16, 7),
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: 150,
                                 decoration: BoxDecoration(
                                   color: Color(0x806F6B6B),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 3,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      offset: Offset(0.5, 0.5),
+                                    )
+                                  ],
                                   borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context).white,
+                                    width: 1,
+                                  ),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16, 12, 16, 0),
                                   child: Text(
-                                    shopDetailShopsRecord.description,
+                                    shopDetailShopsRecord.description!,
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
@@ -222,40 +264,65 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 120,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Colors.black,
+                              offset: Offset(0.5, 0.5),
+                            )
+                          ],
                           borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            width: 1,
+                          ),
                         ),
+                        alignment: AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
-                          child: Builder(
-                            builder: (context) {
-                              final services = shopDetailShopsRecord.services
-                                      .toList()
-                                      ?.toList() ??
-                                  [];
-                              return Wrap(
-                                spacing: 8,
-                                runSpacing: 6,
-                                alignment: WrapAlignment.center,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.center,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: List.generate(services.length,
-                                    (servicesIndex) {
-                                  final servicesItem = services[servicesIndex];
-                                  return Text(
-                                    servicesItem,
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                  );
-                                }),
-                              );
-                            },
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+                          child: FlutterFlowChoiceChips(
+                            initiallySelected: [
+                              if (choiceChipsValue != null) choiceChipsValue!
+                            ],
+                            options: shopDetailShopsRecord.services!
+                                .toList()
+                                .map((label) => ChipData(label))
+                                .toList(),
+                            onChanged: (val) =>
+                                setState(() => choiceChipsValue = val?.first),
+                            selectedChipStyle: ChipStyle(
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).grayIcon,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Exo 2',
+                                    color: Colors.white,
+                                  ),
+                              iconColor: Colors.white,
+                              iconSize: 18,
+                              elevation: 4,
+                            ),
+                            unselectedChipStyle: ChipStyle(
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).grayIcon,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Exo 2',
+                                    color: Colors.white,
+                                  ),
+                              iconColor: Colors.white,
+                              iconSize: 18,
+                              elevation: 4,
+                            ),
+                            chipSpacing: 20,
+                            multiselect: false,
+                            alignment: WrapAlignment.start,
                           ),
                         ),
                       ),
@@ -278,7 +345,18 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              color: Colors.black,
+                              offset: Offset(0.5, 0.5),
+                            )
+                          ],
                           borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 1,
+                          ),
                         ),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -287,47 +365,83 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  shopMapLink = await actions.createURL(
-                                    'https://www.google.com/maps/place/',
-                                    shopDetailShopsRecord.address,
-                                  );
-                                  await launchURL(shopMapLink);
-
-                                  setState(() {});
-                                },
-                                child: FlutterFlowStaticMap(
-                                  location: shopDetailShopsRecord.address,
-                                  apiKey:
-                                      'pk.eyJ1IjoicmNyZXNwbzgwOCIsImEiOiJjbDFxbGcxNGwxcGNrM2JzOTN0bGQ1a2c5In0.2-W0Fg9tbLMN5axs6MsTMA',
-                                  style: MapBoxStyle.Streets,
-                                  width: 300,
-                                  height: 300,
-                                  fit: BoxFit.cover,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 3,
+                                      color: Colors.black,
+                                      offset: Offset(0.5, 0.5),
+                                    )
+                                  ],
                                   borderRadius: BorderRadius.circular(15),
-                                  markerColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  zoom: 14,
-                                  tilt: 0,
-                                  rotation: 0,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    shopMapLink = await actions.createURL(
+                                      'https://www.google.com/maps/place/',
+                                      shopDetailShopsRecord.address,
+                                    );
+                                    await launchURL(shopMapLink!);
+
+                                    setState(() {});
+                                  },
+                                  child: FlutterFlowStaticMap(
+                                    location: shopDetailShopsRecord.address!,
+                                    apiKey:
+                                        'pk.eyJ1IjoicmNyZXNwbzgwOCIsImEiOiJjbDFxbGcxNGwxcGNrM2JzOTN0bGQ1a2c5In0.2-W0Fg9tbLMN5axs6MsTMA',
+                                    style: MapBoxStyle.Streets,
+                                    width: 300,
+                                    height: 300,
+                                    fit: BoxFit.cover,
+                                    borderRadius: BorderRadius.circular(15),
+                                    markerColor: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    zoom: 14,
+                                    tilt: 0,
+                                    rotation: 0,
+                                  ),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                              child: AutoSizeText(
-                                shopDetailShopsRecord.addressText,
-                                textAlign: TextAlign.center,
-                                maxLines: 3,
-                                style: FlutterFlowTheme.of(context)
-                                    .title2
-                                    .override(
-                                      fontFamily: 'Exo 2',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).grayIcon,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 3,
+                                      color: Colors.black,
+                                      offset: Offset(0.5, 0.5),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 12, 16, 12),
+                                  child: AutoSizeText(
+                                    shopDetailShopsRecord.addressText!,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    style: FlutterFlowTheme.of(context)
+                                        .title2
+                                        .override(
+                                          fontFamily: 'Exo 2',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],

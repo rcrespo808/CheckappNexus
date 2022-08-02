@@ -18,7 +18,7 @@ class FFAppState {
         prefs.getBool('ff_pushNotifications') ?? _pushNotifications;
   }
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
   bool _pushNotifications = false;
   bool get pushNotifications => _pushNotifications;
@@ -28,7 +28,7 @@ class FFAppState {
   }
 }
 
-LatLng _latLngFromString(String val) {
+LatLng? _latLngFromString(String? val) {
   if (val == null) {
     return null;
   }

@@ -10,11 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ShopServiceDetailWidget extends StatefulWidget {
   const ShopServiceDetailWidget({
-    Key key,
+    Key? key,
     this.service,
   }) : super(key: key);
 
-  final DocumentReference service;
+  final DocumentReference? service;
 
   @override
   _ShopServiceDetailWidgetState createState() =>
@@ -22,7 +22,7 @@ class ShopServiceDetailWidget extends StatefulWidget {
 }
 
 class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
-  String shopUrl;
+  String? shopUrl;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -30,7 +30,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         iconTheme:
             IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
         automaticallyImplyLeading: true,
@@ -40,7 +40,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
             'Su Cita',
             style: FlutterFlowTheme.of(context).title1.override(
                   fontFamily: 'Exo 2',
-                  color: FlutterFlowTheme.of(context).secondaryColor,
+                  color: FlutterFlowTheme.of(context).primaryText,
                 ),
           ),
         ),
@@ -52,7 +52,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: StreamBuilder<ServicesRecord>(
-          stream: ServicesRecord.getDocument(widget.service),
+          stream: ServicesRecord.getDocument(widget.service!),
           builder: (context, snapshot) {
             // Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
@@ -66,13 +66,13 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                 ),
               );
             }
-            final containerServicesRecord = snapshot.data;
+            final containerServicesRecord = snapshot.data!;
             return Container(
               width: double.infinity,
               height: double.infinity,
               decoration: BoxDecoration(),
               child: StreamBuilder<ShopsRecord>(
-                stream: ShopsRecord.getDocument(containerServicesRecord.shop),
+                stream: ShopsRecord.getDocument(containerServicesRecord.shop!),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -86,14 +86,14 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                       ),
                     );
                   }
-                  final containerShopsRecord = snapshot.data;
+                  final containerShopsRecord = snapshot.data!;
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     height: double.infinity,
                     decoration: BoxDecoration(),
                     child: StreamBuilder<VehiclesRecord>(
                       stream: VehiclesRecord.getDocument(
-                          containerServicesRecord.vehicle),
+                          containerServicesRecord.vehicle!),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -107,7 +107,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                             ),
                           );
                         }
-                        final containerVehiclesRecord = snapshot.data;
+                        final containerVehiclesRecord = snapshot.data!;
                         return Container(
                           width: double.infinity,
                           height: double.infinity,
@@ -130,7 +130,18 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 3,
+                                            color: Colors.black,
+                                            offset: Offset(0.5, 0.5),
+                                          )
+                                        ],
                                         borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -220,10 +231,12 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 5, 0, 0),
+                                                    0, 5, 0, 5),
                                             child: Text(
-                                              dateTimeFormat('MMMEd',
-                                                  containerServicesRecord.date),
+                                              dateTimeFormat(
+                                                  'MMMEd',
+                                                  containerServicesRecord
+                                                      .date!),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .title1,
@@ -242,7 +255,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                           'https://www.google.com/maps/place/',
                                           containerShopsRecord.address,
                                         );
-                                        await launchURL(shopUrl);
+                                        await launchURL(shopUrl!);
 
                                         setState(() {});
                                       },
@@ -254,51 +267,66 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 3,
+                                              color: Colors.black,
+                                              offset: Offset(0.5, 0.5),
+                                            )
+                                          ],
                                           borderRadius:
                                               BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 1,
+                                          ),
                                         ),
                                         child: Stack(
                                           children: [
-                                            ClipRect(
-                                              child: ImageFiltered(
-                                                imageFilter: ImageFilter.blur(
-                                                  sigmaX: 2,
-                                                  sigmaY: 2,
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      child: Image.network(
-                                                        containerShopsRecord
-                                                            .logo,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            1,
-                                                        fit: BoxFit.cover,
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(1, 1, 1, 1),
+                                              child: ClipRect(
+                                                child: ImageFiltered(
+                                                  imageFilter: ImageFilter.blur(
+                                                    sigmaX: 2,
+                                                    sigmaY: 2,
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        child: Image.network(
+                                                          containerShopsRecord
+                                                              .logo!,
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              1,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0.9, -0.55),
-                                                      child: Icon(
-                                                        Icons.location_pin,
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        size: 60,
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0.9, -0.55),
+                                                        child: Icon(
+                                                          Icons.location_pin,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          size: 60,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -311,9 +339,22 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                     .width,
                                                 height: 60,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0x4E6F6B6B),
+                                                  color: Color(0x8C6F6B6B),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 3,
+                                                      color: Color(0x8D000000),
+                                                      offset: Offset(0.5, 0.5),
+                                                    )
+                                                  ],
                                                   borderRadius:
                                                       BorderRadius.circular(15),
+                                                  border: Border.all(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                                 alignment: AlignmentDirectional(
                                                     0, 0.8500000000000001),
@@ -330,7 +371,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                     0, 0),
                                                         child: Text(
                                                           containerShopsRecord
-                                                              .name,
+                                                              .name!,
                                                           textAlign:
                                                               TextAlign.start,
                                                           style: FlutterFlowTheme
@@ -382,10 +423,23 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                       0.8,
                                                   height: 55,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0x4E6F6B6B),
+                                                    color: Color(0x8C6F6B6B),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 3,
+                                                        color:
+                                                            Color(0x8D000000),
+                                                        offset:
+                                                            Offset(0.5, 0.5),
+                                                      )
+                                                    ],
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15),
+                                                    border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 1,
+                                                    ),
                                                   ),
                                                   child: Align(
                                                     alignment:
@@ -398,7 +452,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                   6, 0, 6, 0),
                                                       child: Text(
                                                         containerShopsRecord
-                                                            .addressText,
+                                                            .addressText!,
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -433,11 +487,22 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
-                                      height: 160,
+                                      height: 200,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 3,
+                                            color: Colors.black,
+                                            offset: Offset(0.5, 0.5),
+                                          )
+                                        ],
                                         borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1,
+                                        ),
                                       ),
                                       child: Stack(
                                         children: [
@@ -455,7 +520,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                             15),
                                                     child: Image.network(
                                                       containerVehiclesRecord
-                                                          .photo,
+                                                          .photo!,
                                                       width:
                                                           MediaQuery.of(context)
                                                               .size
@@ -475,40 +540,56 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, -1),
-                                            child: Container(
-                                              width: 100,
-                                              height: 35,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x4E6F6B6B),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              child: Align(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 7, 0, 7),
+                                              child: Container(
+                                                width: 100,
+                                                height: 35,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0x8C6F6B6B),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 3,
+                                                      color: Color(0x8D000000),
+                                                      offset: Offset(0.5, 0.5),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1,
+                                                  ),
+                                                ),
                                                 alignment:
                                                     AlignmentDirectional(0, 0),
-                                                child: Text(
-                                                  'Vehiculo',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Exo 2',
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .primaryBackground,
-                                                      ),
+                                                child: Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Text(
+                                                    'Vehiculo',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Exo 2',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryBackground,
+                                                        ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                           Align(
                                             alignment:
-                                                AlignmentDirectional(0, -0.3),
+                                                AlignmentDirectional(0, -0.2),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 6),
+                                                  .fromSTEB(0, 7, 0, 7),
                                               child: Container(
                                                 width: MediaQuery.of(context)
                                                         .size
@@ -516,9 +597,20 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                     0.8,
                                                 height: 55,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0x4E6F6B6B),
+                                                  color: Color(0x8C6F6B6B),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 3,
+                                                      color: Color(0x8D000000),
+                                                      offset: Offset(0.5, 0.5),
+                                                    )
+                                                  ],
                                                   borderRadius:
                                                       BorderRadius.circular(15),
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1,
+                                                  ),
                                                 ),
                                                 child: Align(
                                                   alignment:
@@ -531,7 +623,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                 6, 0, 6, 6),
                                                     child: Text(
                                                       containerVehiclesRecord
-                                                          .plate,
+                                                          .plate!,
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -550,36 +642,55 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                             ),
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                -0.25, 0.8),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.8,
-                                              height: 55,
-                                              decoration: BoxDecoration(
-                                                color: Color(0x4E6F6B6B),
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 10, 0),
-                                                  child: Text(
-                                                    '${containerVehiclesRecord.make} ${containerVehiclesRecord.model} ${containerVehiclesRecord.year}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .title1
-                                                        .override(
-                                                          fontFamily: 'Exo 2',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                        ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0.8),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 7, 0, 0),
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.8,
+                                                height: 55,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0x8C6F6B6B),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 3,
+                                                      color: Color(0x8D000000),
+                                                      offset: Offset(0.5, 0.5),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                child: Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 10, 0),
+                                                    child: Text(
+                                                      '${containerVehiclesRecord.make} ${containerVehiclesRecord.model} ${containerVehiclesRecord.year}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .title1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Exo 2',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                              ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -593,11 +704,34 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                                child: Text(
-                                  'Nos pondremos en \ncontacto para confirmar tu cita.',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 3,
+                                        color: Colors.black,
+                                        offset: Offset(0.5, 0.5),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        7, 7, 7, 7),
+                                    child: Text(
+                                      'Nos pondremos en \ncontacto para confirmar tu cita.',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
