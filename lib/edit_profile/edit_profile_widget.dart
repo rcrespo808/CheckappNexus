@@ -29,6 +29,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'editProfile'});
     phoneNumberController = TextEditingController(text: currentPhoneNumber);
     userNameController = TextEditingController(text: currentUserDisplayName);
   }
@@ -66,6 +67,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             size: 24,
                           ),
                           onPressed: () async {
+                            logFirebaseEvent(
+                                'EDIT_PROFILE_arrow_back_rounded_ICN_ON_T');
+                            logFirebaseEvent('IconButton_Navigate-Back');
                             Navigator.pop(context);
                           },
                         ),
@@ -75,7 +79,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         child: Text(
                           'Atras',
                           style: FlutterFlowTheme.of(context).title1.override(
-                                fontFamily: 'Exo 2',
+                                fontFamily:
+                                    FlutterFlowTheme.of(context).title1Family,
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                         ),
@@ -176,7 +181,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                         ),
                         style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Exo 2',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).bodyText1Family,
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                       ),
@@ -244,7 +250,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                         ),
                         style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Exo 2',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).bodyText1Family,
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                         keyboardType: TextInputType.phone,
@@ -305,7 +312,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                      fontFamily: 'Exo 2',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyText1Family,
                                       color: FlutterFlowTheme.of(context)
                                           .tertiaryColor,
                                     ),
@@ -325,6 +333,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   size: 30,
                                 ),
                                 onPressed: () async {
+                                  logFirebaseEvent(
+                                      'EDIT_PROFILE_PAGE_camera_ICN_ON_TAP');
+                                  logFirebaseEvent(
+                                      'IconButton_Upload-Photo-Video');
                                   final selectedMedia =
                                       await selectMediaWithSourceBottomSheet(
                                     context: context,
@@ -381,10 +393,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('EDIT_PROFILE_PAGE_Button-Login_ON_TAP');
+                    logFirebaseEvent('Button-Login_Validate-Form');
                     if (formKey.currentState == null ||
                         !formKey.currentState!.validate()) {
                       return;
                     }
+
+                    logFirebaseEvent('Button-Login_Backend-Call');
 
                     final usersUpdateData = createUsersRecordData(
                       displayName: userNameController!.text,
@@ -392,6 +408,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                       photoUrl: uploadedFileUrl,
                     );
                     await currentUserReference!.update(usersUpdateData);
+                    logFirebaseEvent('Button-Login_Alert-Dialog');
                     await showDialog(
                       context: context,
                       builder: (alertDialogContext) {
@@ -408,6 +425,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         );
                       },
                     );
+                    logFirebaseEvent('Button-Login_Navigate-To');
                     await Navigator.push(
                       context,
                       PageTransition(
@@ -424,7 +442,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     height: 50,
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Exo 2',
+                          fontFamily:
+                              FlutterFlowTheme.of(context).subtitle2Family,
                           color: FlutterFlowTheme.of(context).secondaryText,
                           fontSize: 16,
                         ),

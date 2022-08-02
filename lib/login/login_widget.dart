@@ -28,6 +28,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     emailAddressController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Login'});
   }
 
   @override
@@ -85,7 +86,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .title1Family,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryColor,
                                         fontWeight: FontWeight.w800,
@@ -168,7 +170,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyText1Family,
                                         color: FlutterFlowTheme.of(context)
                                             .primaryText,
                                       ),
@@ -268,7 +271,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
-                                          fontFamily: 'Exo 2',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family,
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                         ),
@@ -300,6 +305,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         12, 0, 16, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'LOGIN_PAGE_Button-Login_ON_TAP');
+                                        logFirebaseEvent('Button-Login_Auth');
+
                                         final user = await signInWithEmail(
                                           context,
                                           emailAddressController!.text,
@@ -352,6 +361,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   alignment: AlignmentDirectional(0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
+                                      logFirebaseEvent(
+                                          'LOGIN_PAGE_Button-ForgotPassword_ON_TAP');
+                                      logFirebaseEvent(
+                                          'Button-ForgotPassword_Navigate-To');
                                       await Navigator.push(
                                         context,
                                         PageTransition(
@@ -371,7 +384,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
@@ -426,6 +441,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         15, 0, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'LOGIN_PAGE_REGÍSTRATE_BTN_ON_TAP');
+                                        logFirebaseEvent('Button_Navigate-To');
                                         await Navigator.push(
                                           context,
                                           PageTransition(
@@ -447,7 +465,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .bodyText2
                                             .override(
-                                              fontFamily: 'Exo 2',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2Family,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryColor,

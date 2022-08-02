@@ -36,6 +36,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
     );
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ShopService'});
   }
 
   @override
@@ -66,7 +67,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
               child: Text(
                 'Agenda Tu Cita',
                 style: FlutterFlowTheme.of(context).title2.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).title2Family,
                       color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 22,
                     ),
@@ -85,8 +86,10 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
             elevation: 8,
             label: FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('SHOP_SERVICE_PAGE_AGENDAR_BTN_ON_TAP');
                 if (calendarSelectedDay!.end > getCurrentTimestamp) {
                   if (!(choiceChipsValue != null && choiceChipsValue != '')) {
+                    logFirebaseEvent('Button_Alert-Dialog');
                     await showDialog(
                       context: context,
                       builder: (alertDialogContext) {
@@ -107,6 +110,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                     return;
                   }
                 } else {
+                  logFirebaseEvent('Button_Alert-Dialog');
                   await showDialog(
                     context: context,
                     builder: (alertDialogContext) {
@@ -126,6 +130,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                   return;
                 }
 
+                logFirebaseEvent('Button_Alert-Dialog');
                 var confirmDialogResponse = await showDialog<bool>(
                       context: context,
                       builder: (alertDialogContext) {
@@ -150,6 +155,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                     ) ??
                     false;
                 if (confirmDialogResponse) {
+                  logFirebaseEvent('Button_Backend-Call');
+
                   final servicesCreateData = createServicesRecordData(
                     vehicle: widget.vehicle,
                     owner: currentUserReference,
@@ -161,6 +168,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                     shopName: shopServiceShopsRecord.name,
                   );
                   await ServicesRecord.collection.doc().set(servicesCreateData);
+                  logFirebaseEvent('Button_Alert-Dialog');
                   await showDialog(
                     context: context,
                     builder: (alertDialogContext) {
@@ -177,6 +185,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                       );
                     },
                   );
+                  logFirebaseEvent('Button_Navigate-To');
                   await Navigator.pushAndRemoveUntil(
                     context,
                     PageTransition(
@@ -197,7 +206,7 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                 height: 40,
                 color: FlutterFlowTheme.of(context).secondaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).subtitle2Family,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                 borderSide: BorderSide(
@@ -440,7 +449,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyText1Family,
                                         color: Colors.white,
                                       ),
                                   iconColor: Colors.white,
@@ -452,7 +462,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyText2
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyText2Family,
                                         color: Color(0xFF323B45),
                                       ),
                                   iconColor: Color(0xFF323B45),
@@ -477,7 +488,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                           style: FlutterFlowTheme.of(context)
                               .subtitle1
                               .override(
-                                fontFamily: 'Exo 2',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .subtitle1Family,
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                         ),
@@ -548,7 +560,8 @@ class _ShopServiceWidgetState extends State<ShopServiceWidget> {
                                 selectedDateStyle: FlutterFlowTheme.of(context)
                                     .subtitle1
                                     .override(
-                                      fontFamily: 'Exo 2',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .subtitle1Family,
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryColor,
                                     ),

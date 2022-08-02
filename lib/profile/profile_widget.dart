@@ -49,7 +49,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('PROFILE_PAGE_Profile_ON_PAGE_LOAD');
       if (valueOrDefault(currentUserDocument?.vehicleCount, 0) == 0) {
+        logFirebaseEvent('Profile_Alert-Dialog');
         await showDialog(
           context: context,
           builder: (alertDialogContext) {
@@ -65,6 +67,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
             );
           },
         );
+        logFirebaseEvent('Profile_Navigate-To');
         await Navigator.push(
           context,
           PageTransition(
@@ -79,6 +82,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
       }
     });
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Profile'});
     startPageLoadAnimations(
       animationsMap.values
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
@@ -106,6 +110,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
               size: 30,
             ),
             onPressed: () async {
+              logFirebaseEvent('PROFILE_PAGE_home_ICN_ON_TAP');
+              logFirebaseEvent('IconButton_Navigate-To');
               await Navigator.push(
                 context,
                 PageTransition(
@@ -122,7 +128,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
           'Mi Perfil',
           textAlign: TextAlign.center,
           style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Exo 2',
+                fontFamily: FlutterFlowTheme.of(context).title2Family,
                 color: FlutterFlowTheme.of(context).primaryText,
               ),
         ),
@@ -131,6 +137,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
             child: InkWell(
               onTap: () async {
+                logFirebaseEvent('PROFILE_PAGE_Icon_1co7ujjh_ON_TAP');
+                logFirebaseEvent('Icon_Navigate-To');
                 await Navigator.push(
                   context,
                   PageTransition(
@@ -167,6 +175,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
           ),
           child: FFButtonWidget(
             onPressed: () async {
+              logFirebaseEvent('PROFILE_PAGE_AGENDA_UNA_CITA_BTN_ON_TAP');
+              logFirebaseEvent('Button_Navigate-To');
               await Navigator.push(
                 context,
                 PageTransition(
@@ -183,7 +193,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
               height: 40,
               color: FlutterFlowTheme.of(context).secondaryColor,
               textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                    fontFamily: 'Exo 2',
+                    fontFamily: FlutterFlowTheme.of(context).subtitle2Family,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
               borderSide: BorderSide(
@@ -279,7 +289,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: 'Exo 2',
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
@@ -295,7 +307,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: 'Exo 2',
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
@@ -326,6 +340,8 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               size: 30,
                             ),
                             onPressed: () async {
+                              logFirebaseEvent('PROFILE_PAGE_edit_ICN_ON_TAP');
+                              logFirebaseEvent('IconButton_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -485,7 +501,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                                       .subtitle1
                                                                       .override(
                                                                         fontFamily:
-                                                                            'Exo 2',
+                                                                            FlutterFlowTheme.of(context).subtitle1Family,
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .secondaryColor,
                                                                       ),
@@ -629,6 +645,10 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                 size: 25,
                                               ),
                                               onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'PROFILE_PAGE_add_ICN_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'IconButton_Navigate-To');
                                                 await Navigator.push(
                                                   context,
                                                   PageTransition(
@@ -677,6 +697,11 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             snapshot.data!;
                                         return RefreshIndicator(
                                           onRefresh: () async {
+                                            logFirebaseEvent(
+                                                'PROFILE_ListView_s19bekyh_ON_PULL_TO_REF');
+                                            logFirebaseEvent(
+                                                'ListView_Backend-Call');
+
                                             final usersUpdateData =
                                                 createUsersRecordData(
                                               vehicleCount:
@@ -704,6 +729,10 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                                     .fromSTEB(16, 0, 16, 12),
                                                 child: InkWell(
                                                   onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'PROFILE_PAGE_Container_mdo273mw_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Container_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       PageTransition(

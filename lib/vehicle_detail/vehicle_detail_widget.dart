@@ -56,6 +56,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'VehicleDetail'});
   }
 
   @override
@@ -86,7 +89,7 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
             title: Text(
               'Detalles',
               style: FlutterFlowTheme.of(context).title1.override(
-                    fontFamily: 'Exo 2',
+                    fontFamily: FlutterFlowTheme.of(context).title1Family,
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
             ),
@@ -150,6 +153,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                     size: 15,
                                   ),
                                   onPressed: () async {
+                                    logFirebaseEvent(
+                                        'VEHICLE_DETAIL_PAGE_edit_ICN_ON_TAP');
+                                    logFirebaseEvent('IconButton_Navigate-To');
                                     await Navigator.push(
                                       context,
                                       PageTransition(
@@ -243,7 +249,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText2Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
@@ -257,7 +265,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
-                                          fontFamily: 'Exo 2',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .title1Family,
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                         ),
@@ -284,6 +294,10 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                           .isVerified!)
                                         InkWell(
                                           onLongPress: () async {
+                                            logFirebaseEvent(
+                                                'VEHICLE_DETAIL_ELIMINAR_BTN_ON_LONG_PRES');
+                                            logFirebaseEvent(
+                                                'Button_Alert-Dialog');
                                             var confirmDialogResponse =
                                                 await showDialog<bool>(
                                                       context: context,
@@ -317,9 +331,13 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                     ) ??
                                                     false;
                                             if (confirmDialogResponse) {
+                                              logFirebaseEvent(
+                                                  'Button_Backend-Call');
                                               await vehicleDetailVehiclesRecord
                                                   .reference
                                                   .delete();
+                                              logFirebaseEvent(
+                                                  'Button_Backend-Call');
 
                                               final usersUpdateData = {
                                                 'vehicleCount':
@@ -327,6 +345,8 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                               };
                                               await currentUserReference!
                                                   .update(usersUpdateData);
+                                              logFirebaseEvent(
+                                                  'Button_Navigate-To');
                                               await Navigator.push(
                                                 context,
                                                 PageTransition(
@@ -360,7 +380,10 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle2
                                                       .override(
-                                                        fontFamily: 'Exo 2',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2Family,
                                                         color: Colors.white,
                                                       ),
                                               borderSide: BorderSide(
@@ -381,7 +404,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
-                                                fontFamily: 'Exo 2',
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1Family,
                                                 fontSize: 10,
                                               ),
                                         ),
@@ -500,7 +525,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
-                                                fontFamily: 'Exo 2',
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2Family,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
@@ -546,6 +573,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                       ),
                                       child: InkWell(
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'VEHICLE_DETAIL_PAGE_Row_2vgb25uv_ON_TAP');
+                                          logFirebaseEvent('Row_Navigate-To');
                                           await Navigator.push(
                                             context,
                                             PageTransition(
@@ -637,8 +667,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                                     .of(context)
                                                                 .bodyText1
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Exo 2',
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .secondaryBackground,
@@ -671,6 +702,10 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                     8, 8, 8, 8),
                                             child: InkWell(
                                               onTap: () async {
+                                                logFirebaseEvent(
+                                                    'VEHICLE_DETAIL_PAGE_startCar_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'startCar_Navigate-To');
                                                 await Navigator.push(
                                                   context,
                                                   PageTransition(
@@ -713,6 +748,10 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                 ),
                                                 child: InkWell(
                                                   onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'VEHICLE_DETAIL_Column_w6qxcf20_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Column_Navigate-To');
                                                     await Navigator.push(
                                                       context,
                                                       PageTransition(
@@ -764,8 +803,9 @@ class _VehicleDetailWidgetState extends State<VehicleDetailWidget>
                                                                   .of(context)
                                                               .subtitle1
                                                               .override(
-                                                                fontFamily:
-                                                                    'Exo 2',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle1Family,
                                                                 color: Colors
                                                                     .white,
                                                               ),

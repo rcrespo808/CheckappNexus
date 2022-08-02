@@ -18,6 +18,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'HomePage'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -55,7 +61,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       child: Text(
                         'Te damos la\n bienvenida',
                         style: FlutterFlowTheme.of(context).title2.override(
-                              fontFamily: 'Exo 2',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).title2Family,
                               color:
                                   FlutterFlowTheme.of(context).secondaryColor,
                             ),
@@ -83,7 +90,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .title1
                                     .override(
-                                      fontFamily: 'Exo 2',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .title1Family,
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                     ),
@@ -116,7 +124,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .title3
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .title3Family,
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryColor,
                                       ),
@@ -154,6 +163,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'HOME_PAGE_PAGE_ContainerPerfil_ON_TAP');
+                              logFirebaseEvent('ContainerPerfil_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -202,7 +214,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
@@ -217,6 +231,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'HOME_PAGE_PAGE_ContainerServicios_ON_TAP');
+                              logFirebaseEvent(
+                                  'ContainerServicios_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -264,7 +282,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
@@ -314,7 +334,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
-                                          fontFamily: 'Exo 2',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText1Family,
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                         ),
@@ -349,6 +371,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'HOME_PAGE_PAGE_ContainerPerfil_ON_TAP');
+                              logFirebaseEvent('ContainerPerfil_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -397,7 +422,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
@@ -412,6 +439,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'HOME_PAGE_PAGE_ContainerServicios_ON_TAP');
+                              logFirebaseEvent(
+                                  'ContainerServicios_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -459,7 +490,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
@@ -474,6 +507,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: InkWell(
                             onTap: () async {
+                              logFirebaseEvent(
+                                  'HOME_PAGE_PAGE_ContainerServicios_ON_TAP');
+                              logFirebaseEvent(
+                                  'ContainerServicios_Navigate-To');
                               await Navigator.push(
                                 context,
                                 PageTransition(
@@ -521,7 +558,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
-                                            fontFamily: 'Exo 2',
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText1Family,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),

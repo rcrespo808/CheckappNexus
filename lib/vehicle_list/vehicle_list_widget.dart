@@ -50,6 +50,8 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
           .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
       this,
     );
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'VehicleList'});
   }
 
   @override
@@ -66,7 +68,7 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
           child: Text(
             'Selecciona un Vehiculo',
             style: FlutterFlowTheme.of(context).title2.override(
-                  fontFamily: 'Exo 2',
+                  fontFamily: FlutterFlowTheme.of(context).title2Family,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
           ),
@@ -137,6 +139,9 @@ class _VehicleListWidgetState extends State<VehicleListWidget>
                               ),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent(
+                                      'VEHICLE_LIST_PAGE_Row_n21zhu08_ON_TAP');
+                                  logFirebaseEvent('Row_Navigate-To');
                                   await Navigator.push(
                                     context,
                                     PageTransition(

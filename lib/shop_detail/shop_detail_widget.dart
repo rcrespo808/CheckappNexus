@@ -31,6 +31,12 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ShopDetail'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<ShopsRecord>(
       future: ShopsRecord.getDocumentOnce(widget.shopParameter!),
@@ -60,7 +66,7 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
               child: Text(
                 shopDetailShopsRecord.name!,
                 style: FlutterFlowTheme.of(context).title1.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).title1Family,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
               ),
@@ -78,6 +84,8 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
             elevation: 8,
             label: FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('SHOP_DETAIL_PAGE_AGENDAR_BTN_ON_TAP');
+                logFirebaseEvent('Button_Navigate-To');
                 await Navigator.push(
                   context,
                   PageTransition(
@@ -96,7 +104,7 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                 height: 40,
                 color: FlutterFlowTheme.of(context).secondaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).subtitle2Family,
                       color: Colors.white,
                     ),
                 borderSide: BorderSide(
@@ -300,7 +308,8 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'Exo 2',
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyText1Family,
                                     color: Colors.white,
                                   ),
                               iconColor: Colors.white,
@@ -313,7 +322,8 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                               textStyle: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
-                                    fontFamily: 'Exo 2',
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyText2Family,
                                     color: Colors.white,
                                   ),
                               iconColor: Colors.white,
@@ -332,7 +342,8 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                       child: Text(
                         'Direccion',
                         style: FlutterFlowTheme.of(context).subtitle1.override(
-                              fontFamily: 'Exo 2',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).subtitle1Family,
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                       ),
@@ -384,10 +395,14 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                                 ),
                                 child: InkWell(
                                   onTap: () async {
+                                    logFirebaseEvent(
+                                        'SHOP_DETAIL_StaticMap_vubh7raz_ON_TAP');
+                                    logFirebaseEvent('StaticMap_Custom-Action');
                                     shopMapLink = await actions.createURL(
                                       'https://www.google.com/maps/place/',
                                       shopDetailShopsRecord.address,
                                     );
+                                    logFirebaseEvent('StaticMap_Launch-U-R-L');
                                     await launchURL(shopMapLink!);
 
                                     setState(() {});
@@ -436,7 +451,9 @@ class _ShopDetailWidgetState extends State<ShopDetailWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .title2
                                         .override(
-                                          fontFamily: 'Exo 2',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .title2Family,
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                         ),

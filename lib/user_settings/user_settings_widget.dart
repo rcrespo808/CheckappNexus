@@ -19,6 +19,13 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'UserSettings'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -36,6 +43,8 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
               size: 30,
             ),
             onPressed: () async {
+              logFirebaseEvent('USER_SETTINGS_arrow_back_rounded_ICN_ON_');
+              logFirebaseEvent('IconButton_Navigate-Back');
               Navigator.pop(context);
             },
           ),
@@ -45,7 +54,7 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
           child: Text(
             'Configuraciones',
             style: FlutterFlowTheme.of(context).title2.override(
-                  fontFamily: 'Exo 2',
+                  fontFamily: FlutterFlowTheme.of(context).title2Family,
                   color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22,
                 ),
@@ -88,6 +97,8 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(30, 30, 30, 30),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('USER_SETTINGS_PAGE_LOGOUT_BTN_ON_TAP');
+                    logFirebaseEvent('Button_Auth');
                     await signOut();
                     await Navigator.pushAndRemoveUntil(
                       context,
@@ -108,7 +119,8 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                   options: FFButtonOptions(
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Exo 2',
+                          fontFamily:
+                              FlutterFlowTheme.of(context).subtitle2Family,
                           color: FlutterFlowTheme.of(context).primaryText,
                         ),
                     borderSide: BorderSide(
@@ -160,7 +172,8 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                           style: FlutterFlowTheme.of(context)
                               .bodyText2
                               .override(
-                                fontFamily: 'Exo 2',
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .bodyText2Family,
                                 color: FlutterFlowTheme.of(context).textColor,
                               ),
                         ),
@@ -180,12 +193,16 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 7),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent(
+                            'USER_SETTINGS_PAGE_Button-Login_ON_TAP');
+                        logFirebaseEvent('Button-Login_Set-Dark-Mode-Settings');
                         setDarkModeSetting(
                           context,
                           switchDarkmodeValue!
                               ? ThemeMode.dark
                               : ThemeMode.light,
                         );
+                        logFirebaseEvent('Button-Login_Navigate-Back');
                         Navigator.pop(context);
                       },
                       text: 'Aplicar Cambios',

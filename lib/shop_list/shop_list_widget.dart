@@ -28,6 +28,7 @@ class _ShopListWidgetState extends State<ShopListWidget> {
     super.initState();
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
         .then((loc) => setState(() => currentUserLocationValue = loc));
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ShopList'});
     textController = TextEditingController();
   }
 
@@ -60,6 +61,8 @@ class _ShopListWidgetState extends State<ShopListWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('SHOP_LIST_arrow_back_rounded_ICN_ON_TAP');
+            logFirebaseEvent('IconButton_Navigate-To');
             await Navigator.push(
               context,
               PageTransition(
@@ -76,7 +79,7 @@ class _ShopListWidgetState extends State<ShopListWidget> {
           child: Text(
             'Buscar Talleres',
             style: FlutterFlowTheme.of(context).title2.override(
-                  fontFamily: 'Exo 2',
+                  fontFamily: FlutterFlowTheme.of(context).title2Family,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
           ),
@@ -143,6 +146,10 @@ class _ShopListWidgetState extends State<ShopListWidget> {
                                 child: TextFormField(
                                   controller: textController,
                                   onFieldSubmitted: (_) async {
+                                    logFirebaseEvent(
+                                        'SHOP_LIST_TextField_yq29tggm_ON_TEXTFIEL');
+                                    logFirebaseEvent(
+                                        'TextField_Algolia-Search');
                                     setState(() => algoliaSearchResults = null);
                                     await ShopsRecord.search(
                                       term: textController!.text,
@@ -181,7 +188,8 @@ class _ShopListWidgetState extends State<ShopListWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'Exo 2',
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyText1Family,
                                         color: Colors.black,
                                       ),
                                 ),
@@ -234,6 +242,9 @@ class _ShopListWidgetState extends State<ShopListWidget> {
                   }
                   return RefreshIndicator(
                     onRefresh: () async {
+                      logFirebaseEvent(
+                          'SHOP_LIST_Column_1r8ir978_ON_PULL_TO_REF');
+                      logFirebaseEvent('Column_Refresh-Database-Request');
                       setState(() => _algoliaRequestCompleter = null);
                       await waitForAlgoliaRequestCompleter();
                     },
@@ -249,6 +260,9 @@ class _ShopListWidgetState extends State<ShopListWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                             child: InkWell(
                               onTap: () async {
+                                logFirebaseEvent(
+                                    'SHOP_LIST_PAGE_Store_ListView_ON_TAP');
+                                logFirebaseEvent('Store_ListView_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   PageTransition(
@@ -353,7 +367,10 @@ class _ShopListWidgetState extends State<ShopListWidget> {
                                                           context)
                                                       .subtitle2
                                                       .override(
-                                                        fontFamily: 'Exo 2',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2Family,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)

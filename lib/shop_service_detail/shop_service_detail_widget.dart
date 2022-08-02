@@ -26,6 +26,13 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'shopServiceDetail'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -39,7 +46,7 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
           child: Text(
             'Su Cita',
             style: FlutterFlowTheme.of(context).title1.override(
-                  fontFamily: 'Exo 2',
+                  fontFamily: FlutterFlowTheme.of(context).title1Family,
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
           ),
@@ -251,10 +258,16 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                         3, 7, 0, 7),
                                     child: InkWell(
                                       onTap: () async {
+                                        logFirebaseEvent(
+                                            'SHOP_SERVICE_DETAIL_Container_nvsjjtgy_O');
+                                        logFirebaseEvent(
+                                            'Container_Custom-Action');
                                         shopUrl = await actions.createURL(
                                           'https://www.google.com/maps/place/',
                                           containerShopsRecord.address,
                                         );
+                                        logFirebaseEvent(
+                                            'Container_Launch-U-R-L');
                                         await launchURL(shopUrl!);
 
                                         setState(() {});
@@ -378,8 +391,9 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                   .of(context)
                                                               .subtitle2
                                                               .override(
-                                                                fontFamily:
-                                                                    'Exo 2',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle2Family,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryBackground,
@@ -398,8 +412,9 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                     context)
                                                                 .bodyText1
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Exo 2',
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryBackground,
@@ -458,8 +473,9 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                     context)
                                                                 .bodyText1
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Exo 2',
+                                                                  fontFamily: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1Family,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryBackground,
@@ -574,7 +590,10 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                             context)
                                                         .bodyText1
                                                         .override(
-                                                          fontFamily: 'Exo 2',
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyText1Family,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryBackground,
@@ -629,8 +648,9 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                   context)
                                                               .title2
                                                               .override(
-                                                                fontFamily:
-                                                                    'Exo 2',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .title2Family,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryBackground,
@@ -684,8 +704,9 @@ class _ShopServiceDetailWidgetState extends State<ShopServiceDetailWidget> {
                                                                   context)
                                                               .title1
                                                               .override(
-                                                                fontFamily:
-                                                                    'Exo 2',
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .title1Family,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryBackground,
