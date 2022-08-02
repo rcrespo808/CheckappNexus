@@ -81,6 +81,8 @@ class _AgendaWidgetState extends State<AgendaWidget>
                 padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
                 child: InkWell(
                   onTap: () async {
+                    logFirebaseEvent('AGENDA_COMP_Container_rptxbypd_ON_TAP');
+                    logFirebaseEvent('Container_Navigate-To');
                     await Navigator.push(
                       context,
                       PageTransition(
@@ -114,6 +116,9 @@ class _AgendaWidgetState extends State<AgendaWidget>
                           children: [
                             InkWell(
                               onTap: () async {
+                                logFirebaseEvent(
+                                    'AGENDA_COMP_Container_m4ztgax0_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   PageTransition(
@@ -141,7 +146,9 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                     style: FlutterFlowTheme.of(context)
                                         .subtitle1
                                         .override(
-                                          fontFamily: 'Exo 2',
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle1Family,
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryColor,
                                         ),
@@ -192,6 +199,10 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                         0, 0, 16, 16),
                                     child: InkWell(
                                       onLongPress: () async {
+                                        logFirebaseEvent(
+                                            'AGENDA_delete_rounded_ICN_ON_LONG_PRESS');
+                                        logFirebaseEvent(
+                                            'IconButton_Alert-Dialog');
                                         var confirmDialogResponse =
                                             await showDialog<bool>(
                                                   context: context,
@@ -225,6 +236,8 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                                 ) ??
                                                 false;
                                         if (confirmDialogResponse) {
+                                          logFirebaseEvent(
+                                              'IconButton_Backend-Call');
                                           await listViewServicesRecord.reference
                                               .delete();
                                         } else {

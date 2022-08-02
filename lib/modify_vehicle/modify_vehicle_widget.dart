@@ -34,6 +34,13 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ModifyVehicle'});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<VehiclesRecord>(
       future: VehiclesRecord.getDocumentOnce(widget.vehicle!),
@@ -63,7 +70,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
               child: Text(
                 'Detalles:',
                 style: FlutterFlowTheme.of(context).title2.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).title2Family,
                       color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 22,
                     ),
@@ -500,6 +507,10 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                                   0, 12, 0, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'MODIFY_VEHICLE_SUBIR_FOTO_BTN_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Button_Upload-Photo-Video');
                                               final selectedMedia =
                                                   await selectMediaWithSourceBottomSheet(
                                                 context: context,
@@ -562,7 +573,10 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle2
                                                       .override(
-                                                        fontFamily: 'Exo 2',
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2Family,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -593,10 +607,15 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                             ),
                             child: FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'MODIFY_VEHICLE_PAGE_GUARDAR_BTN_ON_TAP');
+                                logFirebaseEvent('Button_Validate-Form');
                                 if (formKey.currentState == null ||
                                     !formKey.currentState!.validate()) {
                                   return;
                                 }
+
+                                logFirebaseEvent('Button_Backend-Call');
 
                                 final vehiclesUpdateData =
                                     createVehiclesRecordData(
@@ -610,6 +629,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                 );
                                 await modifyVehicleVehiclesRecord.reference
                                     .update(vehiclesUpdateData);
+                                logFirebaseEvent('Button_Alert-Dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -627,6 +647,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                     );
                                   },
                                 );
+                                logFirebaseEvent('Button_Navigate-Back');
                                 Navigator.pop(context);
                               },
                               text: 'Guardar',
@@ -640,7 +661,8 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
-                                      fontFamily: 'Exo 2',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .subtitle2Family,
                                       color: FlutterFlowTheme.of(context)
                                           .tertiaryColor,
                                     ),

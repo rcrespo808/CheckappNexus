@@ -36,6 +36,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     userNameController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'SignUp'});
   }
 
   @override
@@ -70,6 +71,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             size: 24,
                           ),
                           onPressed: () async {
+                            logFirebaseEvent(
+                                'SIGN_UP_arrow_back_rounded_ICN_ON_TAP');
+                            logFirebaseEvent('IconButton_Navigate-Back');
                             Navigator.pop(context);
                           },
                         ),
@@ -80,7 +84,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                           'Atras',
                           textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context).title1.override(
-                                fontFamily: 'Exo 2',
+                                fontFamily:
+                                    FlutterFlowTheme.of(context).title1Family,
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                         ),
@@ -133,7 +138,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                           child: Text(
                             'Crea tu Cuenta',
                             style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'Exo 2',
+                                  fontFamily:
+                                      FlutterFlowTheme.of(context).title1Family,
                                   fontSize: 32,
                                 ),
                           ),
@@ -212,7 +218,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText1Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                       validator: (val) {
@@ -288,7 +295,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText1Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                       keyboardType: TextInputType.phone,
@@ -364,7 +372,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             EdgeInsetsDirectional.fromSTEB(24, 24, 20, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText1Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                       keyboardType: TextInputType.emailAddress,
@@ -453,7 +462,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText1Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                       validator: (val) {
@@ -540,7 +550,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText1Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                       validator: (val) {
@@ -558,11 +569,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('SIGN_UP_PAGE_Button-Login_ON_TAP');
+                    logFirebaseEvent('Button-Login_Validate-Form');
                     if (formKey.currentState == null ||
                         !formKey.currentState!.validate()) {
                       return;
                     }
 
+                    logFirebaseEvent('Button-Login_Auth');
                     if (passwordController?.text !=
                         confirmPasswordController?.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -594,6 +608,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         .doc(user.uid)
                         .update(usersCreateData);
 
+                    logFirebaseEvent('Button-Login_Alert-Dialog');
                     await showDialog(
                       context: context,
                       builder: (alertDialogContext) {
@@ -611,6 +626,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         );
                       },
                     );
+                    logFirebaseEvent('Button-Login_Navigate-To');
                     await Navigator.push(
                       context,
                       PageTransition(
@@ -627,7 +643,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     height: 50,
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Exo 2',
+                          fontFamily:
+                              FlutterFlowTheme.of(context).subtitle2Family,
                           color: FlutterFlowTheme.of(context).secondaryText,
                           fontSize: 16,
                         ),

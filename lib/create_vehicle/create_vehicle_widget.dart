@@ -38,6 +38,8 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'CreateVehicle'});
     textFiedColorController = TextEditingController();
     textFieldMarcaController = TextEditingController();
     textFieldPlacaController = TextEditingController();
@@ -59,7 +61,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
           child: Text(
             'Registra tu vehiculo:',
             style: FlutterFlowTheme.of(context).title2.override(
-                  fontFamily: 'Exo 2',
+                  fontFamily: FlutterFlowTheme.of(context).title2Family,
                   color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22,
                 ),
@@ -440,6 +442,10 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                                         0, 16, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'CREATE_VEHICLE_SUBIR_FOTO_BTN_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Button_Upload-Photo-Video');
                                         final selectedMedia =
                                             await selectMediaWithSourceBottomSheet(
                                           context: context,
@@ -498,7 +504,9 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
-                                              fontFamily: 'Exo 2',
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2Family,
                                               color: Colors.white,
                                             ),
                                         borderSide: BorderSide(
@@ -524,10 +532,15 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                         ),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            logFirebaseEvent(
+                                'CREATE_VEHICLE_PAGE_GUARDAR_BTN_ON_TAP');
+                            logFirebaseEvent('Button_Validate-Form');
                             if (formKey.currentState == null ||
                                 !formKey.currentState!.validate()) {
                               return;
                             }
+
+                            logFirebaseEvent('Button_Backend-Call');
 
                             final vehiclesCreateData = createVehiclesRecordData(
                               plate: textFieldPlacaController!.text,
@@ -545,11 +558,13 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                                 .set(vehiclesCreateData);
                             createdVehicle = VehiclesRecord.getDocumentFromData(
                                 vehiclesCreateData, vehiclesRecordReference);
+                            logFirebaseEvent('Button_Backend-Call');
 
                             final usersUpdateData = {
                               'vehicleCount': FieldValue.increment(1),
                             };
                             await currentUserReference!.update(usersUpdateData);
+                            logFirebaseEvent('Button_Alert-Dialog');
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
@@ -567,6 +582,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                                 );
                               },
                             );
+                            logFirebaseEvent('Button_Navigate-To');
                             await Navigator.push(
                               context,
                               PageTransition(
@@ -589,7 +605,8 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                             color: Color(0xFFFF5722),
                             textStyle:
                                 FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Exo 2',
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .subtitle2Family,
                                       color: FlutterFlowTheme.of(context)
                                           .tertiaryColor,
                                     ),

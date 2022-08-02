@@ -8,7 +8,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 const kThemeModeKey = '__theme_mode__';
 SharedPreferences? _prefs;
 
+enum DeviceSize {
+  mobile,
+  tablet,
+  desktop,
+}
+
 abstract class FlutterFlowTheme {
+  static DeviceSize deviceSize = DeviceSize.mobile;
+
   static Future initialize() async =>
       _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
@@ -70,7 +78,22 @@ abstract class FlutterFlowTheme {
   String get bodyText2Family => typography.bodyText2Family;
   TextStyle get bodyText2 => typography.bodyText2;
 
-  Typography get typography => ThemeTypography(this);
+  Typography get typography => {
+        DeviceSize.mobile: MobileTypography(this),
+        DeviceSize.tablet: TabletTypography(this),
+        DeviceSize.desktop: DesktopTypography(this),
+      }[deviceSize]!;
+}
+
+DeviceSize getDeviceSize(BuildContext context) {
+  final width = MediaQuery.of(context).size.width;
+  if (width < 479) {
+    return DeviceSize.mobile;
+  } else if (width < 991) {
+    return DeviceSize.tablet;
+  } else {
+    return DeviceSize.desktop;
+  }
 }
 
 class LightModeTheme extends FlutterFlowTheme {
@@ -118,8 +141,120 @@ abstract class Typography {
   TextStyle get bodyText2;
 }
 
-class ThemeTypography extends Typography {
-  ThemeTypography(this.theme);
+class MobileTypography extends Typography {
+  MobileTypography(this.theme);
+
+  final FlutterFlowTheme theme;
+
+  String get title1Family => 'Exo 2';
+  TextStyle get title1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
+      );
+  String get title2Family => 'Exo 2';
+  TextStyle get title2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+      );
+  String get title3Family => 'Exo 2';
+  TextStyle get title3 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
+  String get subtitle1Family => 'Exo 2';
+  TextStyle get subtitle1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      );
+  String get subtitle2Family => 'Exo 2';
+  TextStyle get subtitle2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      );
+  String get bodyText1Family => 'Exo 2';
+  TextStyle get bodyText1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
+  String get bodyText2Family => 'Exo 2';
+  TextStyle get bodyText2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
+}
+
+class TabletTypography extends Typography {
+  TabletTypography(this.theme);
+
+  final FlutterFlowTheme theme;
+
+  String get title1Family => 'Exo 2';
+  TextStyle get title1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
+      );
+  String get title2Family => 'Exo 2';
+  TextStyle get title2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+      );
+  String get title3Family => 'Exo 2';
+  TextStyle get title3 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
+  String get subtitle1Family => 'Exo 2';
+  TextStyle get subtitle1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      );
+  String get subtitle2Family => 'Exo 2';
+  TextStyle get subtitle2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      );
+  String get bodyText1Family => 'Exo 2';
+  TextStyle get bodyText1 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
+  String get bodyText2Family => 'Exo 2';
+  TextStyle get bodyText2 => GoogleFonts.getFont(
+        'Exo 2',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
+}
+
+class DesktopTypography extends Typography {
+  DesktopTypography(this.theme);
 
   final FlutterFlowTheme theme;
 

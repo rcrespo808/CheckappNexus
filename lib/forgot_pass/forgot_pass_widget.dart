@@ -21,6 +21,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
   void initState() {
     super.initState();
     emailAddressController = TextEditingController();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ForgotPass'});
   }
 
   @override
@@ -56,6 +57,9 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                           size: 24,
                         ),
                         onPressed: () async {
+                          logFirebaseEvent(
+                              'FORGOT_PASS_arrow_back_rounded_ICN_ON_TA');
+                          logFirebaseEvent('IconButton_Navigate-Back');
                           Navigator.pop(context);
                         },
                       ),
@@ -65,7 +69,8 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                       child: Text(
                         'Atras',
                         style: FlutterFlowTheme.of(context).title1.override(
-                              fontFamily: 'Exo 2',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).title1Family,
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                       ),
@@ -88,7 +93,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
             child: Text(
               'Recupera tu Password',
               style: FlutterFlowTheme.of(context).title1.override(
-                    fontFamily: 'Exo 2',
+                    fontFamily: FlutterFlowTheme.of(context).title1Family,
                     color: FlutterFlowTheme.of(context).secondaryColor,
                     fontSize: 32,
                   ),
@@ -105,7 +110,8 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                     child: Text(
                       'ingrese el correo electrónico asociado, para que le  enviemos un enlace para restablecer su contraseña.',
                       style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Exo 2',
+                            fontFamily:
+                                FlutterFlowTheme.of(context).bodyText2Family,
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                     ),
@@ -173,7 +179,8 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                         EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Exo 2',
+                        fontFamily:
+                            FlutterFlowTheme.of(context).bodyText1Family,
                         color: FlutterFlowTheme.of(context).primaryText,
                       ),
                   keyboardType: TextInputType.emailAddress,
@@ -185,6 +192,8 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
             child: FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('FORGOT_PASS_PAGE_Button-Login_ON_TAP');
+                logFirebaseEvent('Button-Login_Auth');
                 if (emailAddressController!.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -206,7 +215,7 @@ class _ForgotPassWidgetState extends State<ForgotPassWidget> {
                 height: 50,
                 color: FlutterFlowTheme.of(context).secondaryColor,
                 textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Exo 2',
+                      fontFamily: FlutterFlowTheme.of(context).subtitle2Family,
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                 elevation: 3,
