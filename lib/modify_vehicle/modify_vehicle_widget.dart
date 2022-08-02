@@ -13,11 +13,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ModifyVehicleWidget extends StatefulWidget {
   const ModifyVehicleWidget({
-    Key key,
+    Key? key,
     this.vehicle,
   }) : super(key: key);
 
-  final DocumentReference vehicle;
+  final DocumentReference? vehicle;
 
   @override
   _ModifyVehicleWidgetState createState() => _ModifyVehicleWidgetState();
@@ -25,18 +25,18 @@ class ModifyVehicleWidget extends StatefulWidget {
 
 class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
   String uploadedFileUrl = '';
-  TextEditingController textFiedColorController;
-  TextEditingController textFieldMarcaController;
-  TextEditingController textFieldPlacaController;
-  TextEditingController textFieldModeloController;
-  TextEditingController textFieldYearController;
+  TextEditingController? textFiedColorController;
+  TextEditingController? textFieldMarcaController;
+  TextEditingController? textFieldPlacaController;
+  TextEditingController? textFieldModeloController;
+  TextEditingController? textFieldYearController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<VehiclesRecord>(
-      future: VehiclesRecord.getDocumentOnce(widget.vehicle),
+      future: VehiclesRecord.getDocumentOnce(widget.vehicle!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -50,7 +50,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
             ),
           );
         }
-        final modifyVehicleVehiclesRecord = snapshot.data;
+        final modifyVehicleVehiclesRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -64,7 +64,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                 'Detalles:',
                 style: FlutterFlowTheme.of(context).title2.override(
                       fontFamily: 'Exo 2',
-                      color: FlutterFlowTheme.of(context).secondaryColor,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       fontSize: 22,
                     ),
               ),
@@ -472,7 +472,8 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                           image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: Image.network(
-                                              modifyVehicleVehiclesRecord.photo,
+                                              modifyVehicleVehiclesRecord
+                                                  .photo!,
                                             ).image,
                                           ),
                                           borderRadius:
@@ -524,12 +525,12 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                                                                     m.storagePath,
                                                                     m.bytes))))
                                                     .where((u) => u != null)
+                                                    .map((u) => u!)
                                                     .toList();
                                                 ScaffoldMessenger.of(context)
                                                     .hideCurrentSnackBar();
-                                                if (downloadUrls != null &&
-                                                    downloadUrls.length ==
-                                                        selectedMedia.length) {
+                                                if (downloadUrls.length ==
+                                                    selectedMedia.length) {
                                                   setState(() =>
                                                       uploadedFileUrl =
                                                           downloadUrls.first);
@@ -593,7 +594,7 @@ class _ModifyVehicleWidgetState extends State<ModifyVehicleWidget> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 if (formKey.currentState == null ||
-                                    !formKey.currentState.validate()) {
+                                    !formKey.currentState!.validate()) {
                                   return;
                                 }
 

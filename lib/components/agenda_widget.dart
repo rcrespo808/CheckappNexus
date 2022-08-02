@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AgendaWidget extends StatefulWidget {
-  const AgendaWidget({Key key}) : super(key: key);
+  const AgendaWidget({Key? key}) : super(key: key);
 
   @override
   _AgendaWidgetState createState() => _AgendaWidgetState();
@@ -68,7 +68,7 @@ class _AgendaWidgetState extends State<AgendaWidget>
               ),
             );
           }
-          List<ServicesRecord> listViewServicesRecordList = snapshot.data;
+          List<ServicesRecord> listViewServicesRecordList = snapshot.data!;
           return ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
@@ -135,7 +135,7 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                 child: Align(
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Text(
-                                    listViewServicesRecord.service,
+                                    listViewServicesRecord.service!,
                                     textAlign: TextAlign.center,
                                     maxLines: 2,
                                     style: FlutterFlowTheme.of(context)
@@ -160,7 +160,7 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                 ),
                                 child: Text(
                                   dateTimeFormat(
-                                      'd/M/y', listViewServicesRecord.date),
+                                      'd/M/y', listViewServicesRecord.date!),
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
@@ -175,7 +175,7 @@ class _AgendaWidgetState extends State<AgendaWidget>
                                       .secondaryBackground,
                                 ),
                                 child: Text(
-                                  listViewServicesRecord.shopName,
+                                  listViewServicesRecord.shopName!,
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
@@ -258,7 +258,7 @@ class _AgendaWidgetState extends State<AgendaWidget>
                       ),
                     ),
                   ),
-                ).animated([animationsMap['containerOnPageLoadAnimation']]),
+                ).animated([animationsMap['containerOnPageLoadAnimation']!]),
               );
             },
           );

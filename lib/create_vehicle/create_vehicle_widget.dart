@@ -14,11 +14,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CreateVehicleWidget extends StatefulWidget {
   const CreateVehicleWidget({
-    Key key,
+    Key? key,
     this.vehicle,
   }) : super(key: key);
 
-  final DocumentReference vehicle;
+  final DocumentReference? vehicle;
 
   @override
   _CreateVehicleWidgetState createState() => _CreateVehicleWidgetState();
@@ -26,12 +26,12 @@ class CreateVehicleWidget extends StatefulWidget {
 
 class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
   String uploadedFileUrl = '';
-  TextEditingController textFiedColorController;
-  TextEditingController textFieldMarcaController;
-  TextEditingController textFieldPlacaController;
-  TextEditingController textFieldModeloController;
-  TextEditingController textFieldYearController;
-  VehiclesRecord createdVehicle;
+  TextEditingController? textFiedColorController;
+  TextEditingController? textFieldMarcaController;
+  TextEditingController? textFieldPlacaController;
+  TextEditingController? textFieldModeloController;
+  TextEditingController? textFieldYearController;
+  VehiclesRecord? createdVehicle;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -60,7 +60,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
             'Registra tu vehiculo:',
             style: FlutterFlowTheme.of(context).title2.override(
                   fontFamily: 'Exo 2',
-                  color: FlutterFlowTheme.of(context).secondaryColor,
+                  color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22,
                 ),
           ),
@@ -464,12 +464,12 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                                                               m.storagePath,
                                                               m.bytes))))
                                                   .where((u) => u != null)
+                                                  .map((u) => u!)
                                                   .toList();
                                           ScaffoldMessenger.of(context)
                                               .hideCurrentSnackBar();
-                                          if (downloadUrls != null &&
-                                              downloadUrls.length ==
-                                                  selectedMedia.length) {
+                                          if (downloadUrls.length ==
+                                              selectedMedia.length) {
                                             setState(() => uploadedFileUrl =
                                                 downloadUrls.first);
                                             showUploadMessage(
@@ -525,19 +525,19 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             if (formKey.currentState == null ||
-                                !formKey.currentState.validate()) {
+                                !formKey.currentState!.validate()) {
                               return;
                             }
 
                             final vehiclesCreateData = createVehiclesRecordData(
-                              plate: textFieldPlacaController.text,
-                              make: textFieldMarcaController.text,
-                              model: textFieldModeloController.text,
-                              color: textFiedColorController.text,
+                              plate: textFieldPlacaController!.text,
+                              make: textFieldMarcaController!.text,
+                              model: textFieldModeloController!.text,
+                              color: textFiedColorController!.text,
                               photo: uploadedFileUrl,
                               userId: currentUserReference,
                               createdDate: getCurrentTimestamp,
-                              year: textFieldYearController.text,
+                              year: textFieldYearController!.text,
                             );
                             var vehiclesRecordReference =
                                 VehiclesRecord.collection.doc();
@@ -549,7 +549,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                             final usersUpdateData = {
                               'vehicleCount': FieldValue.increment(1),
                             };
-                            await currentUserReference.update(usersUpdateData);
+                            await currentUserReference!.update(usersUpdateData);
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {

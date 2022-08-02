@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 
 // Begin custom action code
 Future<String> createURL(
-  String baseUrl,
-  LatLng latLong,
+  String? baseUrl,
+  LatLng? latLong,
 ) async {
   // concatenate baseURL and latlong lattitude and longitude
+  if (latLong == null || baseUrl == null) return "";
   var lat = double.parse(latLong.latitude.toString());
   var lng = double.parse(latLong.longitude.toString());
 

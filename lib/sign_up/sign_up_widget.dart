@@ -9,20 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpWidget extends StatefulWidget {
-  const SignUpWidget({Key key}) : super(key: key);
+  const SignUpWidget({Key? key}) : super(key: key);
 
   @override
   _SignUpWidgetState createState() => _SignUpWidgetState();
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
-  TextEditingController confirmPasswordController;
-  bool confirmPasswordVisibility;
-  TextEditingController emailAddressController;
-  TextEditingController phoneNumberController;
-  TextEditingController userNameController;
-  TextEditingController passwordController;
-  bool passwordVisibility;
+  TextEditingController? confirmPasswordController;
+  late bool confirmPasswordVisibility;
+  TextEditingController? emailAddressController;
+  TextEditingController? phoneNumberController;
+  TextEditingController? userNameController;
+  TextEditingController? passwordController;
+  late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -62,10 +62,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                         child: FlutterFlowIconButton(
-                          borderColor:
-                              FlutterFlowTheme.of(context).secondaryColor,
                           borderRadius: 30,
-                          borderWidth: 1,
                           buttonSize: 50,
                           icon: Icon(
                             Icons.arrow_back_rounded,
@@ -81,10 +78,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                         child: Text(
                           'Atras',
+                          textAlign: TextAlign.center,
                           style: FlutterFlowTheme.of(context).title1.override(
                                 fontFamily: 'Exo 2',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
+                                color: FlutterFlowTheme.of(context).primaryText,
                               ),
                         ),
                       ),
@@ -108,30 +105,56 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24, 10, 0, 0),
-                child: Text(
-                  'Crea tu Cuenta',
-                  style: FlutterFlowTheme.of(context).title1.override(
-                        fontFamily: 'Exo 2',
-                        fontSize: 32,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                        child: Text(
-                          'Crea tu cuenta llenando la  siguiente informacion, para acceder a Checkapp.',
-                          style: FlutterFlowTheme.of(context).subtitle2,
+                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 0),
+                child: Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).grayIcon,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(24, 10, 0, 0),
+                          child: Text(
+                            'Crea tu Cuenta',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Exo 2',
+                                  fontSize: 32,
+                                ),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                            child: Text(
+                              'Crea tu cuenta llenando la  siguiente informacion, para acceder a Checkapp.',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context).subtitle2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -141,7 +164,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 60,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -162,14 +196,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -203,7 +237,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 60,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -224,14 +269,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -268,7 +313,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 60,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -289,14 +345,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -333,7 +389,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 60,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
@@ -354,14 +421,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -407,7 +474,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 70,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 3,
+                        color: Color(0x33000000),
+                        offset: Offset(0.5, 0.5),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
                   ),
                   alignment: AlignmentDirectional(0, 0),
                   child: Padding(
@@ -429,14 +507,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 0,
                           ),
                           borderRadius: BorderRadius.circular(12),
@@ -481,7 +559,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     if (formKey.currentState == null ||
-                        !formKey.currentState.validate()) {
+                        !formKey.currentState!.validate()) {
                       return;
                     }
 
@@ -499,17 +577,17 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
                     final user = await createAccountWithEmail(
                       context,
-                      emailAddressController.text,
-                      passwordController.text,
+                      emailAddressController!.text,
+                      passwordController!.text,
                     );
                     if (user == null) {
                       return;
                     }
 
                     final usersCreateData = createUsersRecordData(
-                      email: emailAddressController.text,
-                      displayName: userNameController.text,
-                      phoneNumber: phoneNumberController.text,
+                      email: emailAddressController!.text,
+                      displayName: userNameController!.text,
+                      phoneNumber: phoneNumberController!.text,
                       vehicleCount: 0,
                     );
                     await UsersRecord.collection

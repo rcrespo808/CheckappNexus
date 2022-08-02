@@ -11,36 +11,27 @@ abstract class VehiclesRecord
   static Serializer<VehiclesRecord> get serializer =>
       _$vehiclesRecordSerializer;
 
-  @nullable
-  String get plate;
+  String? get plate;
 
-  @nullable
-  String get make;
+  String? get make;
 
-  @nullable
-  String get model;
+  String? get model;
 
-  @nullable
-  String get color;
+  String? get color;
 
-  @nullable
-  String get photo;
+  String? get photo;
 
-  @nullable
-  DocumentReference get userId;
+  DocumentReference? get userId;
 
-  @nullable
-  DateTime get createdDate;
+  DateTime? get createdDate;
 
-  @nullable
-  String get year;
+  String? get year;
 
-  @nullable
-  bool get isVerified;
+  bool? get isVerified;
 
-  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(VehiclesRecordBuilder builder) => builder
     ..plate = ''
@@ -56,11 +47,11 @@ abstract class VehiclesRecord
 
   static Stream<VehiclesRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<VehiclesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   VehiclesRecord._();
   factory VehiclesRecord([void Function(VehiclesRecordBuilder) updates]) =
@@ -69,29 +60,35 @@ abstract class VehiclesRecord
   static VehiclesRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createVehiclesRecordData({
-  String plate,
-  String make,
-  String model,
-  String color,
-  String photo,
-  DocumentReference userId,
-  DateTime createdDate,
-  String year,
-  bool isVerified,
-}) =>
-    serializers.toFirestore(
-        VehiclesRecord.serializer,
-        VehiclesRecord((v) => v
-          ..plate = plate
-          ..make = make
-          ..model = model
-          ..color = color
-          ..photo = photo
-          ..userId = userId
-          ..createdDate = createdDate
-          ..year = year
-          ..isVerified = isVerified));
+  String? plate,
+  String? make,
+  String? model,
+  String? color,
+  String? photo,
+  DocumentReference? userId,
+  DateTime? createdDate,
+  String? year,
+  bool? isVerified,
+}) {
+  final firestoreData = serializers.toFirestore(
+    VehiclesRecord.serializer,
+    VehiclesRecord(
+      (v) => v
+        ..plate = plate
+        ..make = make
+        ..model = model
+        ..color = color
+        ..photo = photo
+        ..userId = userId
+        ..createdDate = createdDate
+        ..year = year
+        ..isVerified = isVerified,
+    ),
+  );
+
+  return firestoreData;
+}

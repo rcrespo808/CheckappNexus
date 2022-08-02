@@ -3,11 +3,11 @@ import 'package:rxdart/rxdart.dart';
 
 class CheckappUsersFirebaseUser {
   CheckappUsersFirebaseUser(this.user);
-  User user;
+  User? user;
   bool get loggedIn => user != null;
 }
 
-CheckappUsersFirebaseUser currentUser;
+CheckappUsersFirebaseUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
 Stream<CheckappUsersFirebaseUser> checkappUsersFirebaseUserStream() =>
     FirebaseAuth.instance
